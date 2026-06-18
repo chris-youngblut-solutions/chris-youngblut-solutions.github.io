@@ -19,10 +19,22 @@ const project = caseStudyToProject[entry.id]
   ? getProject(caseStudyToProject[entry.id])
   : undefined;
 
-// Problem-class lead: the structured blocks (the problem → mapping the universe
-// → the solution stack → obstacles & nuance → where it lands), over the detail body.
+// Problem-class lead, rendered in a fixed on-page order. The data order in
+// case-study-mechanisms.ts is authoritative for CONTENT; CS_BLOCK_ORDER fixes the
+// sequence uniformly across all case studies (edit here to reorder). Unknown
+// labels fall to the end in their data order.
+const CS_BLOCK_ORDER = [
+  "the problem",
+  "obstacles & nuance",
+  "mapping the universe",
+  "the solution stack",
+  "where it lands",
+];
 const mech = caseStudyMechanisms[entry.id];
-const blocks = mech?.blocks ?? [];
+const blocks = [...(mech?.blocks ?? [])].sort(
+  (a, b) =>
+    (CS_BLOCK_ORDER.indexOf(a.label) + 1 || 99) - (CS_BLOCK_ORDER.indexOf(b.label) + 1 || 99),
+);
 ---
 
 <CabinShell
