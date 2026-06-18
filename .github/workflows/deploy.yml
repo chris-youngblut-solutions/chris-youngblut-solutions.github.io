@@ -25,9 +25,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # withastro/action auto-detects pnpm from pnpm-lock.yaml, installs,
-      # runs `astro build`, and uploads the Pages artifact from ./dist.
+      # withastro/action auto-detects pnpm from pnpm-lock.yaml (version via the
+      # package.json `packageManager` field), installs, runs `astro build`, and
+      # uploads the Pages artifact from ./dist. node-version is pinned because
+      # the action defaults to Node 20, which Astro 6 rejects (needs >=22.12).
       - uses: withastro/action@v3
+        with:
+          node-version: 22
 
   deploy:
     needs: build
