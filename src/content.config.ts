@@ -2,12 +2,11 @@ import { defineCollection } from "astro:content";
 import { z } from "astro:schema";
 import { glob } from "astro/loaders";
 
-// Case studies — the "Writing" section. Sourced from the sanitized writeups
-// (exposure/bundles/2026-06-17-in-loop-surface/portfolio/, /vetit CLEAR). The
-// markdown body holds the verified detail. The mechanism-view lead (a `framing`
-// wrapper + the disposition → class → where-it-shows-up [layers] → proof blocks)
-// lives in src/data/case-study-mechanisms.ts, keyed by slug, so the structured
-// content is type-checked rather than authored as fragile nested frontmatter.
+// Case studies — the "Writing" section. The markdown body holds the verified
+// detail. The problem-class lead (the problem → mapping the universe → the
+// solution stack → obstacles & nuance → where it lands) lives in
+// src/data/case-study-mechanisms.ts, keyed by slug, so the structured content
+// is type-checked rather than authored as fragile nested frontmatter.
 const caseStudies = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/case-studies" }),
   schema: z.object({

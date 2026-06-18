@@ -19,10 +19,9 @@ const project = caseStudyToProject[entry.id]
   ? getProject(caseStudyToProject[entry.id])
   : undefined;
 
-// Mechanism-view lead: a short framing wrapper + the structured blocks
-// (disposition → class → where it shows up → proof), over the detail body.
+// Problem-class lead: the structured blocks (the problem → mapping the universe
+// → the solution stack → obstacles & nuance → where it lands), over the detail body.
 const mech = caseStudyMechanisms[entry.id];
-const framing = mech?.framing;
 const blocks = mech?.blocks ?? [];
 ---
 
@@ -56,10 +55,6 @@ const blocks = mech?.blocks ?? [];
     </div>
 
     <h1 class="wu-title">{entry.data.title}</h1>
-
-    {framing && (
-      <p class="cs-framing"><strong>Framing.</strong> {framing}</p>
-    )}
 
     {blocks.length > 0 && <Blocks blocks={blocks} class="pblocks cs-blocks" />}
 

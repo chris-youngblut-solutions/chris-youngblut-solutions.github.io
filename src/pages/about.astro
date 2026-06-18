@@ -1,5 +1,26 @@
 ---
+import Blocks from "../components/Blocks.astro";
 import CabinShell from "../layouts/CabinShell.astro";
+import type { Block } from "../data/projects";
+
+// Per-domain through-line summaries of skills/builds — replaces the old prose
+// arc. Capability-only on the legal line (no client/matter); method-only on
+// trust & safety (no platform name, no figures).
+const throughlines: Block[] = [
+  {
+    label: "through-lines",
+    kind: "layers",
+    items: [
+      "industrial automation — pneumatic and hydraulic systems with condition-based preventive maintenance; baseline-and-deviation diagnostics. The same signal-path decomposition carries into the protocol and field-diagnostic work (opendbc-ag, raven-viper).",
+      "trust & safety at scale — queues, risk, and big-data systems; a root-cause-analysis program that keeps a live ML enforcement model measurably correct (method-only).",
+      "AI infrastructure — multi-GPU serving (vLLM behind a hand-written router), local inference and GPU performance engineering (gfx1150-bench), across a tailnet-linked fleet I provision and run.",
+      "legal AI — privilege-aware retrieval for a solo-attorney practice over a vector + graph store, with document access enforced as a code-level gate.",
+      "dev platform — a scoping-to-signed-release pipeline run as skills (mapit → shipit), an adversarial release-review panel, and agent + evaluation infrastructure.",
+      "data & BI — a governed dbt + MetricFlow semantic layer whose human and agent (MCP) consumers read the same numbers; typed knowledge graphs over real corpora.",
+      "interfaces — local hold-to-talk dictation (voicekb), the Cabin design system this site runs on, and Spaces, a configurable desktop platform.",
+    ],
+  },
+];
 ---
 
 <CabinShell
@@ -17,20 +38,17 @@ import CabinShell from "../layouts/CabinShell.astro";
       tooling on hardware I provision and run myself, independently as
       <strong>^Loop Solutions</strong>. Remote (US).
     </p>
-    <p>
-      The background runs from pneumatic-and-hydraulic automation and preventive maintenance,
-      through agricultural technology and trust &amp; safety at platform scale, to independent AI
-      engineering — industrial controls, big-data risk systems, and managed AI services in turn.
-    </p>
-    <p>
-      The public repositories are the proof where it exists; the case studies cover the systems
-      that aren't open-sourced.
-    </p>
+  </div>
 
+  <Blocks blocks={throughlines} class="pblocks cs-blocks" />
+
+  <div class="cs-body cs-body-detail">
     <h2>Contact</h2>
     <ul>
       <li><a href="mailto:christopheryoungblut@gmail.com">christopheryoungblut@gmail.com</a></li>
-      <li><a href="https://linkedin.com/in/chris-youngblut-solutions">linkedin.com/in/chris-youngblut-solutions</a></li>
+      <li>
+        <a href="https://linkedin.com/in/chris-youngblut-solutions">linkedin.com/in/chris-youngblut-solutions</a>
+      </li>
       <li><a href="https://github.com/chris-youngblut-solutions">github.com/chris-youngblut-solutions</a></li>
     </ul>
   </div>

@@ -1,280 +1,328 @@
-// Mechanism-view leads for the case studies (the "Writing" section). Each entry
-// re-leads its writeup from how the work operates: the disposition (the reusable
-// pattern), the class of problem it solves (generalized), where it shows up
-// across domains (the cross-domain proof), and the proof (the concrete artifact).
-// Neutral register — the mechanism frame is the lead, not hype. The verified
-// detail lives in the markdown body (src/content/case-studies/<slug>.md); this
-// file owns only the lead. Keyed by case-study slug (the file id).
+// Problem-class leads for the case studies (the "Writing" section). Each entry
+// re-leads its writeup the way the operator works a problem: state the CLASS of
+// problem, chunk it by mapping the universe (mode-c cartography), form the
+// solution as a stack that fills the negative space, name the obstacles and
+// nuance, then place the layer in an MSP / BI / enterprise stack it resolves.
+// Neutral register. The verified detail lives in the markdown body
+// (src/content/case-studies/<slug>.md); this file owns only the lead. Keyed by
+// case-study slug (the file id).
 //
-// Sanitization is load-bearing here: trust & safety stays method-only (no
-// platform name, no internal data, no accuracy figures); the legal practice is
-// capability-only ("a solo-attorney practice", no client/matter content);
-// equipment specifics stay general. Facts mirror the verified bodies.
+// Sanitization is load-bearing: trust & safety stays method-only (no platform
+// name, no internal data, no accuracy figures); the legal practice is
+// capability-only ("a solo-attorney practice", no client/matter content, generic
+// "vector + graph store"); equipment specifics stay general. Facts mirror the
+// verified bodies.
 import type { Block } from "./projects";
 
 export interface CaseStudyMechanism {
-  framing: string;
   blocks: Block[];
 }
 
 export const caseStudyMechanisms: Record<string, CaseStudyMechanism> = {
   "pipeline-methodology": {
-    framing:
-      "FDE roles ask for reusable delivery assets — deployment kits, cookbooks, repeatable engagement scaffolding. This is the pipeline I use to take a project from a blank scoping question to a signed, hardened public release, and the artifacts that make it repeatable.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Encode the rule as a gate. Take a standard that normally rides on attention — something a person has to remember to check — and make it a machine-checked step that runs every time, so the gate does the work vigilance used to.",
+          "Solo and small-team delivery has no guardrails: a standard that should hold on every release — no secrets, scoped changes, a real license, signed artifacts — rides on the maker remembering to check it, and erodes under time and turnover. The class is **release safety that depends on attention** rather than on a gate.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Any standard that erodes under scale, time, or turnover because it depends on attention: release safety, compliance, quality thresholds, cost ceilings, credential hygiene. Wherever “we’ll review for it” is the only enforcement, the standard drifts.",
+          "The option space runs from ad-hoc (\"ship when it feels ready\") to heavyweight enterprise SDLC. Chunked, the real surface is: where version control should enter, what each tier of maturity actually requires, which checks are mechanizable versus judgment, and where a leak or scope-creep can slip in. Mapping that first is what lets the same gates run on every project instead of being re-decided per repo.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "this pipeline — `/shipit` refuses to flip a repo public until `/vetit`’s BLOCK bucket is empty, and the denylist the gate greps is the same source the pre-commit hooks check, so a leak is caught at commit time and at the gate.",
-          "opendbc-ag — CI rejects any out-of-range or duplicated PGN automatically; the build, not a maintainer, enforces scope.",
-          "a solo-attorney legal practice — quality thresholds enforced as retrieval gates rather than a final read-through (capability only).",
-          "industrial preventive maintenance — a baseline-and-deviation check that catches a failure before it happens, not after.",
+          "/mapit — universe-scoping cartography: a scored triage catalog of an area before any build decision.",
+          "/pointit — promote one candidate into a T0 scratch container (no git, reversible).",
+          "/sendit — T0 → T1 private repo with the scaffolding: dual license, pre-commit, task runner, CI.",
+          "/vetit — the read-only ship-prep gate: denylist grep + full-history secret scan + a six-judge panel → BLOCK / ADVISE.",
+          "/shipit — T1 → T2 public with the hardening: branch protection, signed releases, SBOM + SLSA provenance.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "The gate has to be un-skippable — `/shipit` aborts without a clear `/vetit`, and the denylist the gate greps is the same source the pre-commit hooks check, so a leak is caught at commit time **and** at the gate.",
+          "Tier is lifecycle state, not a directory — nothing skips a tier, and retirement is a separate move, so the same gates run in the same order every time.",
+          "Continuity is part of delivery — session handoff/intake and a cadence-reviewed decision register keep the work coherent across cold starts.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "Eight repos have shipped through `/sendit → /vetit → /shipit` to public, each arriving with a dual license, pre-commit plus CI, a sanitization gate it has passed, branch protection, and signed releases. The path is identical every run; the gates are the same instruments each time.",
+          "This is the **SDLC / release-governance layer** — the gates an enterprise puts between a developer's commit and a signed public artifact, packaged as a repeatable delivery kit an MSP could run per client. Eight repos have shipped through it to public.",
         ],
       },
     ],
   },
 
   "cartography-and-graphs": {
-    framing:
-      "Two recurring demands in the roles I target: mapping unfamiliar systems, and knowledge-graph / retrieval work. These are the artifacts that show both — a wide-net cartography method and two typed graphs over real corpora.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Map the surface before committing to a path, and build the instrument that does the seeing rather than just looking. The method is schema-first: define the node and edge types before touching the data, parse a real corpus into exactly those types, then query across the result — so the structure is queryable, not a diagram.",
+          "Before you can build in an unfamiliar domain — or trust a large corpus — you have to know its shape, and most teams jump straight to a tool or a vendor pick without ever mapping the surface. The class is **decision-under-unfamiliarity**: scoping a landscape, or making a messy corpus answerable, before committing to a build.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Any problem that starts with an unfamiliar landscape or an unstructured corpus: technology and vendor scoping, domain onboarding, retrieval and knowledge-graph work, cross-domain pattern recognition. The recurring need is to make a large, messy surface answerable before deciding what to build on it.",
+          "The method is mode-c cartography: catalog every component, vendor, and technology in an area, scored against the constraints that actually apply, **before** any build decision — the map is the deliverable, not a recommendation. For a corpus the same instinct goes typed: define the node and edge types first, parse the real corpus into exactly those, then query across the result, so the structure is queryable rather than a diagram.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "galaxy-map — a wide-net `/mapit` triage catalog of every component, vendor, and technology in an area, scored against fixed constraints, written before any build decision.",
-          "mechanism-graph — a typed KuzuDB graph over a de-identified career-evidence corpus; a cross-domain probe returns the cluster mechanisms spanning three-plus domains in 24 ms.",
-          "dev-tel-graph — the same schema-first method on a different corpus and a different graph engine, testing that the approach transfers; spike stage.",
+          "galaxy-map — a wide-net `/mapit` triage catalog per area, scored against fixed constraints, written before a candidate is chosen.",
+          "mechanism-graph — a typed KuzuDB graph over a de-identified career-evidence corpus: 93 mechanisms, 10 domains, 316 evidence nodes under a versioned schema.",
+          "dev-tel-graph — the same schema-first method on a different corpus and a different graph engine, testing that the approach transfers (spike stage).",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "The schema is the design — separating the invariant from the method lets one disposition be traced across domains and time, which a flat document set can't do without manual cross-referencing.",
+          "The query that justifies the structure returns the cluster mechanisms spanning three-plus domains in 24 ms — a single traversal, because the cross-domain relationships are first-class edges.",
+          "De-identified: no client data is in the graph; the mechanisms and evidence are abstracted from their original engagements.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "The graphs are real and queryable: mechanism-graph holds 93 mechanisms, 10 domains, 6 through-lines, and 316 evidence nodes under a versioned schema that separates the invariant from the method, and the cross-domain query that justifies the structure runs as a single traversal. The corpus is de-identified — no client data.",
+          "This is the **BI / knowledge layer** — cataloging a domain or corpus so it is queryable: the discovery step before an enterprise data or vendor decision, the scoping pass an MSP runs on a new client's stack, the retrieval substrate under a knowledge product.",
         ],
       },
     ],
   },
 
   "rca-enforcement-model": {
-    framing:
-      "Trust & Safety and AI-governance roles ask for a way to make a live model’s decisions measurably better and keep them there. This is the method, run in production at scale, for finding where an enforcement model is wrong, fixing the cause, and holding the line on a cadence. It is described as a repeatable program, employer-agnostic, with no platform-internal data.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Trace an error to its cause, fix the cause, and stand up a measurement loop so the same class can’t quietly reopen. Group failures by what is going wrong underneath rather than by what the wrong outcome looked like, so one fix closes a whole class instead of one case at a time.",
+          "A model that makes live decisions is wrong in ways that drift, and the wrongness compounds silently unless something measures it on a cadence. The class is **decision-quality on a moving target**: any production system whose adjudicable outputs degrade as inputs, policy, and the world shift.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Any system that makes adjudicable decisions against a ground truth and drifts over time: live-ML decision quality, enforcement and risk, and — the same shape, earlier — multi-layer hardware and equipment fault-finding. The recurring need is to keep a moving system correct, not to correct it once.",
+          "The failure surface chunks by where a wrong decision originates — an input, a feature, a threshold, or a rule — and by symptom versus cause. The choice that organizes everything is to build the error taxonomy by **cause, not symptom**, so one fix closes a whole class of errors instead of one case at a time, and the work stops chasing symptoms that keep reappearing.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "trust & safety — a root-cause program on a production enforcement model: measure against ground truth, build a cause-first taxonomy, trace, feed the correction back, hold the loop on a cadence (method-only).",
-          "handheld GPU inference — a multi-layer re-baseline that traced an apparent runtime gap to an uncontrolled clock and a quant artifact, not the backend (gfx1150-bench).",
-          "industrial equipment — an intermittent GPS-dropout fault isolated along the signal path to a located cause rather than a guess.",
-          "preventive maintenance — baseline-and-deviation tracking that catches a fault while it is small.",
+          "measure against ground truth — adjudicate a sample independently of what the model did; the disagreements are the baseline.",
+          "taxonomize by cause — group the errors by what is going wrong underneath, not by what the wrong decision looked like.",
+          "trace to root cause — follow a representative error back through the decision path to an actionable origin.",
+          "feed the correction back — change the enforcement logic, re-measure with the same instrument; confirmed only when the class shrinks and no new one opens.",
+          "hold the loop — re-run on a cadence so a closed class can't silently reopen.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "The instrument is held fixed across a fix, so an improvement is comparable rather than anecdotal — and a regression shows up as movement against a known reference, not a fresh investigation.",
+          "The sample bounds the result — an error pattern that never enters the sample isn't addressed; the ground-truth adjudication is the load-bearing step.",
+          "It reduces recurring, cause-shared errors; it is not a substitute for the model work that changes what the system can decide in the first place.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "Run in production trust & safety at platform scale, described here as a repeatable five-step program — employer-agnostic, with no platform name, no platform-internal data, and no accuracy figures. The method is portable to any live system whose decisions can be adjudicated against a ground truth.",
+          "This is the **model-quality / risk-ops layer** — the MLOps and QA loop an enterprise needs the moment a model makes live decisions. Described method-only: no platform name, no platform-internal data, no accuracy figures; portable to any live system whose decisions can be adjudicated against a ground truth.",
         ],
       },
     ],
   },
 
   "governance-patterns": {
-    framing:
-      "Governance and AI-safety roles ask for instruments that make a policy actually hold. Two I build and reuse: a multi-judge adversarial panel that audits output before it ships, and an access-control-plus-reconciliation pattern that makes an access rule bite.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Make a rule something that runs as a standing process, not a one-time act — and when the check is a judgment, decompose it into independent single-axis reviews so nothing falls between two concerns nobody owned. The recomposition is paid by the machine; the reader gets one report.",
+          "A rule that is checked once, or checked by one broad review, leaves a gap that widens silently — a grant outlives its reason, an over-claim slips past a reviewer weighing everything at once. The class is **policy that erodes between checks**: release safety, compliance, access control.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Any place a check averages away the thing it should have caught, or runs only once: release review, compliance and risk, access control, content adjudication. The failure mode the pattern names is the silent gap a single, broad, one-shot check leaves behind.",
+          "Two failure shapes recur. One: a single reviewer averages away the weakness that falls between two concerns nobody owned. Two: an access control answers \"may this identity in, now?\" but never \"is the set it admits still the set that should be admitted?\" The resolution in both is to make the check a **standing, decomposed process** rather than a one-time act.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "ship-panel — six independent, adversarial single-axis judges plus a synthesis pass; runs as the `/vetit` review stage over a repo, a bundle, or a single file, and an artifact does not ship until the report is CLEAR.",
-          "access-as-code — every access control paired with a scheduled reconciliation loop that compares the granted set against the intended set and surfaces the drift; originated in physical facility access, generalizes to data, system, and credential access.",
-          "release gates — branch protection, required checks, and signed releases wired into every public repo, so “safe to ship” is a gate rather than a judgment call.",
+          "ship-panel — six independent, adversarial single-axis judges plus a synthesis pass; runs as the `/vetit` review stage over a repo, a bundle, or a single file; nothing ships until the report is CLEAR.",
+          "access-as-code — every access control paired with a scheduled reconciliation loop that compares the granted set to the intended set and surfaces the drift.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "The judges are independent (no anchoring) and adversarial (silence on an axis is a finding, not a skip); the synthesis is the only seat that sees the whole board, so the reader gets one report, not six.",
+          "The reconciliation loop doesn't have to auto-revoke — surfacing the drift is what converts a silent divergence into an actionable one; the cadence is what makes the policy bite.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "ship-panel is in use as the review stage of the ship gate and runs unchanged across repositories, bundles, and single files; the same six-axis shape backs every public release here. access-as-code is applied across physical and system-access contexts as a pattern rather than a single packaged tool.",
+          "This is the **governance / compliance layer** — release review plus access reconciliation, the IAM and change-control an enterprise audits and an MSP operates. The patterns travel because they are about an artifact's claims and an access set's drift, not a file type or a building.",
         ],
       },
     ],
   },
 
   "gfx1150-inference": {
-    framing:
-      "AI-infrastructure roles ask for inference optimization on real hardware. This is a benchmark-and-tuning study on a handheld AMD iGPU (Radeon 890M, gfx1150): a roofline analysis, an 8-model ROCm-vs-Vulkan matrix, and a 2.43× speculative-decoding result, with a reproducible harness published as gfx1150-bench.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Fix the physical ceiling first, then measure everything against it. A roofline analysis pins the memory-bandwidth wall for the device, every backend and quant is measured as a fraction of that wall, and the one lever that beats the wall is isolated — so optimization becomes closing a known gap rather than chasing headroom that isn’t there.",
+          "Running capable LLM inference on hardware that isn't a datacenter means fighting a physical ceiling — and most \"X beats Y\" backend comparisons are really measuring an uncontrolled environment. The class is **resource optimization under a hard constraint**: getting real throughput out of consumer or owned hardware, and knowing which gains are real.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Resource optimization under a hard constraint: getting real inference out of consumer hardware, cost-performance tradeoffs, and routing a workload to the backend that fits it. The recurring move is to separate a genuine limit from a fixable inefficiency before spending effort.",
+          "The lever space is backend (ROCm vs Vulkan), quant, flash-attention, RADV flags, and clock state — plus one structural escape, speculative decoding. Mapping it starts by pinning the ceiling: a roofline analysis fixes the memory-bandwidth wall, so every result reads as a fraction of a known limit instead of an absolute that hides the environment.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "gfx1150 backend matrix — Vulkan wins token generation in every cell, ROCm wins prompt processing in nearly every cell, so chat-shaped work routes to Vulkan and long-context prefill to ROCm; generation sits at 82–91% of the bandwidth wall.",
-          "speculative decoding — the one lever that beats the wall: a 14B target with a 1.5B draft measures 2.43× at the best draft-max, a tuning-and-benchmark result against upstream binaries, not a daemon written here.",
-          "multi-GPU serving — a hand-written FastAPI router in front of vLLM on dual 3090s, placing each request on the GPU that fits.",
+          "roofline — fix the memory-bandwidth wall for the device (~96 GB/s measured), giving a per-model token-generation ceiling.",
+          "the backend matrix — sweep backend × quant × flash-attn × RADV flags across eight models; Vulkan wins token generation everywhere (82–91% of the wall), ROCm wins prefill nearly everywhere.",
+          "speculative decoding — the one lever that beats the wall: a 14B target with a 1.5B draft measures 2.43× at the best draft-max.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "The corrected baseline **is** the finding — an earlier \"Vulkan wins decisively\" read was mostly a parked GPU clock plus a per-backend quant artifact; re-running clock-locked on Q4_0 cut the gap roughly threefold.",
+          "The 2.43× is a tuning-and-benchmark result measured against upstream `llama.cpp` binaries, not a daemon written here — a daemon-side integration is deferred, not built.",
+          "The wall moves only with faster RAM or a wider bus; with it fixed, optimization is closing a known gap, not finding more headroom.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "The harness, the pinned methodology, and the raw CSVs are public as gfx1150-bench; the backend carve-out and the 2.43× reproduce from it on a clock-locked gfx1150 device. The corrected baseline is the point of the work — an earlier “Vulkan wins decisively” reading was mostly an uncontrolled-clock artifact.",
+          "This is the **AI-infra / cost layer** — getting capable inference out of constrained or owned hardware: the on-prem-versus-cloud cost decision an enterprise faces and the managed-inference offering an MSP builds. The harness is public as gfx1150-bench; the carve-out and the 2.43× reproduce on a clock-locked gfx1150.",
         ],
       },
     ],
   },
 
   "industrial-edge": {
-    framing:
-      "Industrial-automation and edge roles ask for hands-on work where OT meets IT — field equipment, buses, edge devices. This pairs a CAN/GPS diagnostic on agricultural spray equipment with a curriculum that taught the firmware-flash procedure, alongside the public CAN-protocol library that backs the domain.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Bring inspectable tooling to a domain that doesn’t have it, and decompose a field failure along its signal path to a located cause. Where automotive has open protocol libraries and capture workflows, off-highway equipment mostly doesn’t — so the work is to build the missing corpus and write the fix down so others can run it.",
+          "Off-highway equipment runs on CAN and ISOBUS buses with far less open tooling than cars have, so a captured bus is opaque and a field fix lives only in the head of whoever worked it out. The class is **closed-tooling domains**: making an opaque machine readable, and a one-time repair repeatable.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Domains with closed or opaque tooling and hands-on OT/IT work: protocol reverse-mapping to public standards, bus-level diagnostics on real equipment, and turning a one-time fix into a teachable procedure. The recurring need is to make an opaque machine readable and its repair repeatable.",
+          "The surface splits into the protocol side — what is public-standard versus proprietary OEM, and where a redistributable corpus can legally live — and the field side — a signal path with several possible upstream causes. Mapping the protocol space first is what bounds the build to pure-standard PGNs, a scope that stays unambiguous across every plausible repair-rights outcome.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "opendbc-ag — an MIT-licensed agricultural CAN/ISOBUS DBC corpus (pure-standard PGNs only) that makes a captured ag bus readable; scope enforced by CI, not review.",
-          "raven-viper — an intermittent GPS-dropout fault on a self-propelled sprayer isolated along receiver → bus → steering controller to a located cause (method; equipment kept general).",
-          "sprayer-apprenticeship — a documentation-only curriculum that turns the firmware-flash fix into a step-by-step procedure with failure modes and a check at each stage.",
-          "industrial automation — the earlier ground for the same disposition: pneumatic and hydraulic systems and preventive maintenance, read at the mechanism level.",
+          "opendbc-ag — an MIT-licensed agricultural CAN/ISOBUS DBC corpus, pure-standard PGNs only (2,690 PGNs, 2,780 signals across three public-source files), every signal commented with its origin.",
+          "raven-viper — a GPS-dropout diagnostic that isolates an intermittent fault along receiver → bus → steering controller to a located cause (method; equipment kept general).",
+          "sprayer-apprenticeship — a documentation-only curriculum turning the firmware-flash fix into a step-by-step procedure with failure modes and a check at each stage.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "Scope is enforced by CI, not review — workflows reject any proprietary-range or cross-file-duplicate PGN across a Python version matrix, so the build rejects scope violations without a maintainer reading every line.",
+          "The signal count is honest about its shape — most are PGN-level placeholders from the bulk public source awaiting enrichment; the developed signal-level definitions live in the hand-curated files.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "opendbc-ag is public, MIT-licensed, and the first repo through the delivery pipeline: 2,690 PGNs and 2,780 signals across three DBC files from distinct public sources, every signal commented with its public origin, and three CI workflows — one runs the test suite across a Python 3.10–3.13 matrix, another rejects proprietary-range and duplicate PGNs — so scope is enforced by the build, not review. The field diagnostic and curriculum are method and documentation, kept general.",
+          "This is the **OT / edge layer** — where operational technology meets IT: making industrial buses inspectable and field procedures repeatable, the asset-management and edge-diagnostic work an MSP or an enterprise OT team owns. opendbc-ag is public; the field diagnostic and curriculum are method and documentation, kept general.",
         ],
       },
     ],
   },
 
   spaces: {
-    framing:
-      "The forward-deployed roles I’m pursuing keep describing the same build: a configurable platform that adapts one surface to many contexts — agentic platforms, control planes, package hosts. Spaces is that pattern.",
     blocks: [
       {
-        label: "the disposition",
+        label: "the problem",
         kind: "prose",
         items: [
-          "Factor the invariant into a shared core and put everything platform-specific behind an adapter seam, so one engine targets very different backends without knowing which it’s driving. The durable artifact is data — a Space is defined by a manifest, and the running windows are a projection of it.",
+          "A single machine has to serve many unrelated work contexts, and switching between them means manually reopening apps, re-tiling windows, and paying for idle ones in GPU and RAM. The class is **one surface, many contexts**: reshaping a machine to a use without forking the logic per platform.",
         ],
       },
       {
-        label: "the class of problem",
+        label: "mapping the universe",
         kind: "prose",
         items: [
-          "Any problem where one capability has to run across heterogeneous surfaces or contexts without forking the logic: a configurable platform that adapts one surface to many uses, control planes, multi-backend tooling. It is the same shape the forward-deployed roles describe — one platform, many deployments.",
+          "The build space spans full virtualization (heavy) to manual window management (no leverage). Chunked, the real seams are: how a context is described (data, not running processes), how windows are placed (one engine across different window managers), and how an idle context releases its resources without losing state. The invariant to factor out is the layout/placement math; everything platform-specific goes behind an adapter.",
         ],
       },
       {
-        label: "where it shows up",
+        label: "the solution stack",
         kind: "layers",
         items: [
-          "Spaces' WM-adapter seam — one Rust core drives both Hyprland (directly) and GNOME (through a companion translating to Mutter’s `move_resize_frame`) behind a single `WindowManagerAdapter` trait.",
-          "the eval harness — one domain-agnostic engine; each domain is a pack behind a `--domain` seam, added without touching the loop, runner, or scoring.",
-          "multi-GPU serving — a hand-written FastAPI router puts one interface in front of vLLM across the GPUs, placing each request on the GPU that fits.",
+          "shared core — the Space data model and the zone/layout math in one Rust crate with no UI dependency.",
+          "WM-adapter seam — a `WindowManagerAdapter` trait drives both Hyprland (directly) and GNOME (through a companion translating to Mutter's `move_resize_frame`).",
+          "warden — a ~1,800-line Rust daemon that freezes an idle Space via the cgroup-v2 freezer and reclaims GPU/RAM, thawing with state intact.",
+          "the .space manifest — a Space is defined in data; the running windows are a projection of it.",
         ],
       },
       {
-        label: "the proof",
+        label: "obstacles & nuance",
+        kind: "list",
+        items: [
+          "Freeze is a lifecycle boundary, not an isolation one — warden reclaims resources from an idle Space; it does not sandbox a running one. The per-Space data boundary is named design intent, not built.",
+          "GNOME exposes no external window-control API — the companion is the only way to drive Mutter from outside, riding the existing Activities press rather than claiming a new global shortcut.",
+        ],
+      },
+      {
+        label: "where it lands",
         kind: "prose",
         items: [
-          "Shipped and dogfooded on an X1 Pro handheld: the shared core and zone math, the Hyprland adapter, warden’s freeze/thaw, and a GNOME surface v0 that runs the full loop (menu → launch → snap → freeze → thaw) on GNOME 49.6/Wayland. The per-Space sandbox is named design intent, not built — Spaces organize, they don’t yet isolate.",
+          "This is the **endpoint / workspace layer** — one machine reshaped into switchable work contexts with their resources reclaimed: the standardization an enterprise wants on a managed endpoint and an MSP runs across a fleet. Shipped and dogfooded on an X1 Pro (GNOME surface v0: menu → launch → snap → freeze → thaw).",
         ],
       },
     ],

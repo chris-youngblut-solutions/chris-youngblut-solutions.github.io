@@ -162,6 +162,15 @@ body {
   background: var(--cabin-accent-wash);
 }
 
+/* Landing lede — the mechanism statement, scaled ~20% down from the display
+   token (landing only; /about's h1 keeps the full display size). */
+.index-lede {
+  font-size: calc(var(--t-display) * 0.8);
+  font-variation-settings:
+    "opsz" 110,
+    "SOFT" 50;
+}
+
 /* ----------------------------------------------------------------
    UMBRELLA GRID — project umbrellas as cards (landing + /projects index).
    ---------------------------------------------------------------- */
@@ -536,30 +545,13 @@ body {
    CASE-STUDY BODY — rendered markdown (/writing/[slug]). Element styles
    (h2 / p / a / code / pre / hr) come from colors_and_type.css remapped to
    --cabin-* in this file; this layer adds vertical rhythm, list styling, and
-   a quieter treatment for the `> **Framing.**` note than the big pullquote.
+   table styling for the rendered detail body.
    ---------------------------------------------------------------- */
 .cs {
   max-width: 46rem;
 }
-/* Mechanism-view lead: a quiet framing wrapper, then the structured blocks,
-   then the detail body under a labelled rule. */
-.cs-framing {
-  font-family: var(--font-serif);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  font-variation-settings:
-    "opsz" 40,
-    "SOFT" 40;
-  color: var(--cabin-ink-2);
-  border-left: 2px solid var(--cabin-accent);
-  padding: 2px 0 2px 16px;
-  margin: 0 0 26px;
-  max-width: 42rem;
-}
-.cs-framing strong {
-  color: var(--cabin-accent-deep);
-}
+/* Problem-class lead: the structured blocks, then the detail body under a
+   labelled rule. */
 .cs-blocks {
   margin-top: 0;
 }

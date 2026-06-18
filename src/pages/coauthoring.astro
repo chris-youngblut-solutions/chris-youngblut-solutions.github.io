@@ -3,53 +3,60 @@ import Blocks from "../components/Blocks.astro";
 import CabinShell from "../layouts/CabinShell.astro";
 import type { Block } from "../data/projects";
 
-// "How I co-author with Claude" — a standalone page on the rail. Drawn from the
-// operator's reflections + the mechanism model (build the apparatus / decides).
-// Neutral register; honest about the division of labor. No internal paths/data.
-const framing =
-  "These roles run on an AI substrate, so how I work with it is part of the work. This is how I co-author with Claude: what the division of labor is, what the loop looks like, and what stays a human decision.";
-
+// "How I co-author with Claude" — a standalone page on the rail. Voiced around
+// the operator's working mode (mode-c cartographer + systems-mechanism reader)
+// with Claude as a coworker. Neutral register; honest about what stays a human
+// decision. No internal paths/data.
 const blocks: Block[] = [
   {
-    label: "the stance",
+    label: "the operating mode",
     kind: "prose",
     items: [
-      "I keep the decisions and the taste; Claude is the apparatus. It reads breadth, drafts, fans out across a problem, and verifies; I set the direction, own the design forks, and make the call. Seeing the board and moving a piece both stay with me.",
+      "I work as a **mode-c cartographer** and a systems-mechanism reader: map the universe of a problem before deciding, read a system by its mechanism rather than its domain surface, and build the tool that fills the negative space. Claude is how I run that mode at speed.",
     ],
   },
   {
-    label: "the loop",
+    label: "claude as coworker",
+    kind: "prose",
+    items: [
+      "Claude is a coworker, not a vending machine. It maps the breadth with me — surveying an option space, drafting the solution stack, running the gates — while I hold the read of the mechanism, the taste, and the decision. The cartography and the call stay mine; the legwork is shared.",
+    ],
+  },
+  {
+    label: "from problem to ship",
     kind: "layers",
     items: [
-      "scope — `/mapit` catalogs the full option surface before anything is built; I pick the candidate to pursue.",
-      "build — `/pointit` and `/sendit` scaffold it; Claude drafts against a fixed structure and I review every fork.",
-      "gate — `/vetit` runs a sanitization sweep plus an adversarial review panel; nothing ships until it comes back CLEAR.",
+      "map — `/mapit` catalogs the option space before anything is built; I pick what to pursue.",
+      "form the stack — scope the solution as layers; Claude drafts against a fixed structure and I review every fork.",
+      "build — `/sendit` scaffolds the repo; the work is co-written, then read line by line.",
+      "verify — independent agents try to refute the claims and find the leaks; the `/vetit` gate must come back CLEAR.",
       "ship — `/shipit` flips it public with the hardening; the gate, not a feeling, authorizes the flip.",
-      "continuity — `/handoff` and `/intake` carry context across sessions, and a decision register re-opens locked calls on a cadence.",
     ],
   },
   {
-    label: "how the work is checked",
+    label: "what stays a human decision",
     kind: "list",
     items: [
-      "**Verify-gated, not single-pass** — claims and drafts are checked by independent agents prompted to refute, not to confirm.",
-      "**Proof-gated** — nothing gets positioned until an artifact proves it; in-build work stays labeled in-build.",
-      "**Sanitized before publish** — a denylist grep, a secret scan, and the panel run before anything goes public.",
-      "**Honest by default** — neutral output, no flattery; a disagreement gets surfaced rather than smoothed over.",
+      "**The read** — which mechanism a system actually runs on, and where the negative space is.",
+      "**The design forks** — surfaced for me to choose; Claude proposes, I decide.",
+      "**The taste** — what is honest, what is over-claimed, and what ships.",
     ],
   },
   {
-    label: "build the apparatus",
-    kind: "prose",
+    label: "guardrails",
+    kind: "list",
     items: [
-      "The leverage isn't the prompting — it's building the instruments that make the co-authoring repeatable: the skills pipeline, the adversarial review panel, a typed mechanism-graph, the eval harness. I ship the machine that produces the outputs, not just the outputs.",
+      "**Verify-gated** — claims and drafts are checked by independent agents prompted to refute, not to confirm.",
+      "**Proof-gated** — nothing is positioned until an artifact proves it; in-build work stays labeled in-build.",
+      "**Sanitized before publish** — a denylist grep, a secret scan, and an adversarial panel run before anything goes public.",
+      "**Honest by default** — neutral output, no flattery; a disagreement gets surfaced rather than smoothed over.",
     ],
   },
   {
     label: "the proof",
     kind: "prose",
     items: [
-      "This site, the eight public repositories, and the case studies were built this way — scoped, drafted, adversarially verified, and shipped through the same governed pipeline.",
+      "This site, the eight public repositories, and the case studies were built this way — mapped, drafted, adversarially verified, and shipped through the same governed pipeline.",
     ],
   },
 ];
@@ -57,15 +64,13 @@ const blocks: Block[] = [
 
 <CabinShell
   title="How I co-author with Claude — Chris Youngblut"
-  description="The division of labor, the loop, and what stays a human decision when building on an AI substrate."
+  description="How I work — mode-c cartographer and systems-mechanism reader, with Claude as a coworker — and what stays a human decision."
   crumb="co-authoring"
   activeTrunk="coauthoring"
 >
   <article class="wu cs">
     <p class="cabin-eyebrow">co-authoring</p>
     <h1 class="wu-title">How I co-author with Claude</h1>
-
-    <p class="cs-framing"><strong>Framing.</strong> {framing}</p>
 
     <Blocks blocks={blocks} class="pblocks cs-blocks" />
   </article>
