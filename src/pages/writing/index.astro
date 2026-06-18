@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import CabinShell from "../../layouts/CabinShell.astro";
+
+const entries = (await getCollection("caseStudies")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<CabinShell title="Writing — C. Youngblut" crumb="writing" activeTrunk="writing">
+  <p class="cabin-eyebrow">case studies</p>
+  <h1 class="display">Writing</h1>
+  <p class="wu-lead">
+    Neutral studies of systems I've built and run — what each is, and what shipped.
+  </p>
+
+  <div class="umbrella-grid">
+    {
+      entries.map((e) => (
+        <a class="umbrella-card" href={`/writing/${e.id}`}>
+          <div class="uc-head">
+            <span class="uc-date">{e.data.date}</span>
+            {e.data.repo && (
+              <span class="chip" data-kind="accent">
+                {e.data.repo.name}
+              </span>
+            )}
+          </div>
+          <h2 class="uc-name">{e.data.title}</h2>
+          <p class="uc-what">{e.data.summary}</p>
+          <div class="uc-foot">
+            {e.data.lenses.map((l) => (
+              <span class="chip">{l}</span>
+            ))}
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</CabinShell>

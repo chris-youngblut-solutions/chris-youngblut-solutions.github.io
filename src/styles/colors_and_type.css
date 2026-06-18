@@ -1,0 +1,271 @@
+/* ==========================================================================
+   in^loop — Color & Type tokens
+   --------------------------------------------------------------------------
+   Warm, paper-forward palette. Serif display + clean sans body.
+   Inspired by 70s stamped steel, tan leather, raw wood + Claude's restraint.
+   ========================================================================== */
+
+/* --- Web fonts -------------------------------------------------------------
+   Self-hosted via Fontsource (woff2 bundled by Vite, served same-origin so the
+   strict CSP's `font-src 'self'` holds — no third-party origin):
+   Fraunces Variable — display serif (opsz/wght/SOFT/WONK axes, full.css)
+   Inter Variable    — body sans (standard + italic)
+   JetBrains Mono    — technical/mono (400 + 500)
+   Imported in src/layouts/Base.astro.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* --- Paper / ink ------------------------------------------------------ */
+  --paper:            #F5F2EC;  /* app background — warm cream */
+  --paper-2:          #EFEBE2;  /* subtle surface elevation (subdued) */
+  --paper-3:          #E8E3D7;  /* cards, input rest, quiet blocks */
+  --paper-inset:      #F9F7F2;  /* near-white inset on darker paper */
+  --ink:              #1A1A1A;  /* primary text, wordmark */
+  --ink-2:            #3A3835;  /* secondary text */
+  --ink-3:            #6B6861;  /* tertiary / captions */
+  --ink-4:            #A6A198;  /* disabled / hints */
+
+  /* --- Accents --------------------------------------------------------- */
+  --terracotta:       #D97757;  /* primary accent — caret, CTA, links */
+  --terracotta-deep:  #B85A3E;  /* hover / pressed */
+  --terracotta-soft:  #EABFA9;  /* tint / highlight bg */
+  --terracotta-wash:  #F3E2D6;  /* faintest tint for sections */
+
+  --stone:            #8B8370;  /* muted accent, secondary chrome */
+  --stone-deep:       #5E5849;
+  --stone-soft:       #C8C1B0;
+
+  /* --- Semantic (quiet, paper-tinted) --------------------------------- */
+  --ok:               #5F6B3D;  /* olive drab — success */
+  --warn:             #C28A3A;  /* amber, dulled */
+  --danger:           #A8523C;  /* brick red */
+  --info:             #6B7F8F;  /* cool grey-blue */
+
+  /* --- Lines / shadow -------------------------------------------------- */
+  --hairline:         rgba(26, 26, 26, 0.08);
+  --rule:             rgba(26, 26, 26, 0.14);
+  --rule-strong:      rgba(26, 26, 26, 0.22);
+  --shadow-xs:        0 1px 0 rgba(26, 26, 26, 0.04);
+  --shadow-sm:        0 1px 2px rgba(26, 26, 26, 0.06), 0 0 0 1px rgba(26, 26, 26, 0.04);
+  --shadow-md:        0 4px 14px rgba(26, 26, 26, 0.07), 0 0 0 1px rgba(26, 26, 26, 0.04);
+  --shadow-lg:        0 20px 48px rgba(26, 26, 26, 0.10), 0 0 0 1px rgba(26, 26, 26, 0.04);
+  --inset:            inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(26, 26, 26, 0.05);
+
+  /* --- Radii ----------------------------------------------------------- */
+  --r-xs:   2px;
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   12px;
+  --r-xl:   20px;
+  --r-pill: 999px;
+
+  /* --- Spacing (4px base) --------------------------------------------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  /* --- Typography: families ------------------------------------------- */
+  --font-serif: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans:  'Inter Variable', -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* --- Typography: sizes ---------------------------------------------- */
+  --t-display:  clamp(48px, 7vw, 88px);
+  --t-h1:       clamp(36px, 4.5vw, 56px);
+  --t-h2:       clamp(28px, 3vw, 36px);
+  --t-h3:       22px;
+  --t-h4:       18px;
+  --t-body:     16px;
+  --t-small:    14px;
+  --t-micro:    12px;
+  --t-mono:     13px;
+
+  /* --- Line heights & tracking ---------------------------------------- */
+  --lh-display: 1.02;
+  --lh-heading: 1.12;
+  --lh-body:    1.55;
+  --lh-tight:   1.35;
+  --trk-display: -0.025em;
+  --trk-heading: -0.015em;
+  --trk-mono:    0.01em;
+  --trk-label:   0.08em; /* small caps / eyebrow */
+
+  /* --- Motion --------------------------------------------------------- */
+  --ease:       cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   360ms;
+}
+
+/* ==========================================================================
+   Semantic element styles
+   ========================================================================== */
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Display / headings --- */
+.display, h1.display {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: var(--t-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--trk-display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h1, .h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--t-h1);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--trk-display);
+  font-variation-settings: 'opsz' 100, 'SOFT' 30;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h2, .h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--t-h2);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--trk-heading);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--trk-heading);
+  color: var(--ink);
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--t-h4);
+  line-height: var(--lh-tight);
+  color: var(--ink);
+}
+
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.lead {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.35;
+  color: var(--ink-2);
+  font-variation-settings: 'opsz' 72, 'SOFT' 40;
+  text-wrap: pretty;
+}
+
+small, .small {
+  font-size: var(--t-small);
+  color: var(--ink-3);
+}
+
+.micro {
+  font-size: var(--t-micro);
+  color: var(--ink-3);
+}
+
+/* Eyebrow / label — tiny tracked caps, used on section starters */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--trk-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Inline code + mono */
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono);
+  letter-spacing: var(--trk-mono);
+  color: var(--ink-2);
+}
+
+code {
+  background: var(--paper-3);
+  padding: 1px 6px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hairline);
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--t-mono);
+  line-height: 1.6;
+  background: var(--paper-3);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  overflow: auto;
+}
+
+/* Links — terracotta, underline on hover */
+a {
+  color: var(--terracotta-deep);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--dur-fast) var(--ease);
+}
+a:hover { color: var(--ink); text-decoration: underline; }
+
+/* Quote / pullquote */
+blockquote {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.35;
+  color: var(--ink);
+  border-left: 2px solid var(--terracotta);
+  padding-left: var(--s-5);
+  margin: var(--s-5) 0;
+  font-variation-settings: 'opsz' 100, 'SOFT' 50;
+}
+
+/* Horizontal rule — hairline */
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: var(--s-6) 0;
+}
+
+/* Selection — terracotta wash */
+::selection {
+  background: var(--terracotta-soft);
+  color: var(--ink);
+}

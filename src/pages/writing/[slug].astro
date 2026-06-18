@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from "astro:content";
+import { getProject } from "../../data/projects";
+import { caseStudyToProject } from "../../data/related";
+import { caseStudyMechanisms } from "../../data/case-study-mechanisms";
+import Blocks from "../../components/Blocks.astro";
+import CabinShell from "../../layouts/CabinShell.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("caseStudies");
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Cross-link up to the project umbrella this case study belongs to.
+const project = caseStudyToProject[entry.id]
+  ? getProject(caseStudyToProject[entry.id])
+  : undefined;
+
+// Mechanism-view lead: a short framing wrapper + the structured blocks
+// (disposition → class → where it shows up → proof), over the detail body.
+const mech = caseStudyMechanisms[entry.id];
+const framing = mech?.framing;
+const blocks = mech?.blocks ?? [];
+---
+
+<CabinShell
+  title={`${entry.data.title} — C. Youngblut`}
+  description={entry.data.summary}
+  crumb={`writing / ${entry.id}`}
+  activeTrunk="writing"
+>
+  <article class="wu cs">
+    <a class="wu-back" href="/writing">← writing</a>
+
+    {
+      project && (
+        <a class="related-link related-up" href={`/projects/${project.slug}`}>
+          ↑ part of {project.name}
+        </a>
+      )
+    }
+
+    <div class="wu-eyebrow">
+      <span class="wu-date">{entry.data.date}</span>
+      {entry.data.lenses.map((l) => <span class="chip">{l}</span>)}
+      {
+        entry.data.repo && (
+          <a class="chip" data-kind="accent" href={entry.data.repo.url}>
+            {entry.data.repo.name} ↗
+          </a>
+        )
+      }
+    </div>
+
+    <h1 class="wu-title">{entry.data.title}</h1>
+
+    {framing && (
+      <p class="cs-framing"><strong>Framing.</strong> {framing}</p>
+    )}
+
+    {blocks.length > 0 && <Blocks blocks={blocks} class="pblocks cs-blocks" />}
+
+    <div class:list={["cs-body", blocks.length > 0 && "cs-body-detail"]}>
+      {blocks.length > 0 && <p class="pblock-label cs-detail-label">the detail</p>}
+      <Content />
+    </div>
+  </article>
+</CabinShell>

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {
+    "includes": [
+      "src/**",
+      "*.mjs",
+      "*.ts",
+      "!dist",
+      "!**/*.astro",
+      "!src/styles/cabin.css",
+      "!src/styles/colors_and_type.css",
+      "!src/styles/inloop-kit.css",
+      "!src/styles/_reference-osm-bridge.css"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "complexity": { "noImportantStyles": "off" }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } }
+}

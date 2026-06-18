@@ -1,0 +1,56 @@
+---
+import ThemeToggle from "../lib/cabin/ThemeToggle.tsx";
+import Base from "./Base.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  crumb?: string;
+  activeTrunk?: string;
+}
+const { title, description, crumb = "home", activeTrunk = "projects" } = Astro.props;
+
+// Left-rail trunks. Each points at a real v1 section (no dangling anchors).
+// Alphabetized for display.
+const trunks = [
+  { id: "projects", name: "Projects", href: "/" },
+  { id: "writing", name: "Writing", href: "/writing" },
+  { id: "coauthoring", name: "Co-authoring", href: "/coauthoring" },
+  { id: "about", name: "About", href: "/about" },
+  { id: "resume", name: "Résumé", href: "/cv" },
+].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
+---
+
+<Base title={title} description={description}>
+  <div class="site-shell">
+    <header class="site-strip cabin-nav">
+      <a class="cabin-brand" href="/"><span class="cabin-caret">^</span>youngblut</a>
+      <span class="cabin-nav-divider"></span>
+      <span class="cabin-crumb">{crumb}</span>
+      <div class="cabin-nav-right">
+        <span class="strip-status"><span class="dot" data-risk="ok"></span>8 public repos</span>
+        <ThemeToggle client:idle />
+      </div>
+    </header>
+
+    <nav class="site-rail cabin-side" aria-label="Sections">
+      {
+        trunks.map((t) => (
+          <a
+            class:list={["cabin-side-item", { "is-on": t.id === activeTrunk }]}
+            href={t.href}
+          >
+            <span class="cabin-side-dot" />
+            <span class="cabin-side-name">{t.name}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <main class="site-main">
+      <div class="site-main-inner">
+        <slot />
+      </div>
+    </main>
+  </div>
+</Base>

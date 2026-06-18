@@ -1,0 +1,42 @@
+---
+import { projects } from "../data/projects";
+import CabinShell from "../layouts/CabinShell.astro";
+
+const sorted = [...projects].sort((a, b) =>
+  a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+);
+---
+
+<CabinShell
+  title="C. Youngblut — Forward-Deployed Engineer"
+  crumb="home"
+  activeTrunk="projects"
+>
+  <p class="cabin-eyebrow">one operator · one kit · n builds</p>
+  <h1 class="display">
+    Reads a system by its mechanism, then builds the tool that fills the negative space.
+  </h1>
+
+  <div class="umbrella-grid">
+    {
+      sorted.map((p) => (
+        <a class="umbrella-card" href={`/projects/${p.slug}`}>
+          <div class="uc-head">
+            <span class="uc-date">{p.date}</span>
+            {p.tag && (
+              <span class="chip" data-kind="accent">
+                {p.tag}
+              </span>
+            )}
+          </div>
+          <h2 class="uc-name">{p.name}</h2>
+          <p class="uc-what">{p.what}</p>
+          <div class="uc-foot">
+            {p.subs && <span class="chip">{p.subs.length} pieces</span>}
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+</CabinShell>

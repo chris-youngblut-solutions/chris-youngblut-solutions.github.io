@@ -1,0 +1,695 @@
+/* ==========================================================================
+   CABIN — design system
+   --------------------------------------------------------------------------
+   Cabin is a warm, paper-forward operating system aesthetic. Album-cover
+   framing, knurled brass switches, serif display, terracotta accents.
+   This is the canonical token + class library. Components consume only
+   --cabin-* tokens (and font families inherited from colors_and_type.css).
+
+   Theme switch: <html data-cabin="day">  | <html data-cabin="night">
+   Metals:       data-metal="brass" | "aluminum" | "rosegold"
+   ========================================================================== */
+
+/* ============================================================
+   THEME TOKENS — day (default)
+   ============================================================ */
+:root,
+[data-cabin="day"] {
+  /* paper — body of every cabin surface */
+  --cabin-paper:        #EDE3CF;
+  --cabin-paper-2:      #E4D8BE;   /* hover, selected row */
+  --cabin-paper-3:      #D9C9A8;   /* deeper inset */
+  --cabin-paper-inset:  #F4ECDA;   /* lifted cards on paper */
+
+  /* ink — type & rules */
+  --cabin-ink:          #2A1F18;
+  --cabin-ink-2:        #4A3828;
+  --cabin-ink-3:        #6B5340;
+  --cabin-ink-4:        #9A8770;
+  --cabin-rule:         rgba(60,30,15,0.10);
+  --cabin-rule-2:       rgba(60,30,15,0.18);
+  --cabin-rule-strong:  rgba(60,30,15,0.28);
+
+  /* accent */
+  --cabin-accent:       #B85A3E;
+  --cabin-accent-deep:  #8E4530;
+  --cabin-accent-soft:  rgba(184,90,62,0.14);
+  --cabin-accent-wash:  rgba(184,90,62,0.06);
+
+  /* the bezel — frame around focal artifacts */
+  --cabin-bezel:        #6B3D30;
+  --cabin-bezel-edge:   rgba(0,0,0,0.18);
+  --cabin-bezel-stamp:  rgba(255,255,255,0.55);
+
+  /* the card — focal surface inside the bezel */
+  --cabin-card:         linear-gradient(180deg, #F7F0E1 0%, #ECE0C7 60%, #DECDA8 100%);
+  --cabin-card-ink:     #2A1F18;
+  --cabin-card-ink-2:   #6B5340;
+  --cabin-card-rule:    rgba(60,30,15,0.10);
+
+  --cabin-card-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 0 0 1px rgba(60,30,15,0.06),
+    0 24px 48px rgba(0,0,0,0.22);
+
+  /* semantic (paper-tinted, like in^loop) */
+  --cabin-ok:           #5F6B3D;
+  --cabin-warn:         #C28A3A;
+  --cabin-danger:       #A8523C;
+  --cabin-info:         #6B7F8F;
+}
+
+/* ============================================================
+   THEME TOKENS — night
+   ============================================================ */
+[data-cabin="night"] {
+  --cabin-paper:        #14181B;
+  --cabin-paper-2:      #1A1F22;
+  --cabin-paper-3:      #21272B;
+  --cabin-paper-inset:  #1E2428;
+
+  --cabin-ink:          #ECE3CF;
+  --cabin-ink-2:        #C9BFA8;
+  --cabin-ink-3:        #8E8470;
+  --cabin-ink-4:        #5C544A;
+  --cabin-rule:         rgba(220,210,190,0.08);
+  --cabin-rule-2:       rgba(220,210,190,0.16);
+  --cabin-rule-strong:  rgba(220,210,190,0.28);
+
+  --cabin-accent:       #D97757;
+  --cabin-accent-deep:  #B85A3E;
+  --cabin-accent-soft:  rgba(217,119,87,0.16);
+  --cabin-accent-wash:  rgba(217,119,87,0.06);
+
+  --cabin-bezel:        #1A211E;
+  --cabin-bezel-edge:   rgba(0,0,0,0.4);
+  --cabin-bezel-stamp:  rgba(220,210,190,0.5);
+
+  --cabin-card:         linear-gradient(180deg, #1F2622 0%, #161C19 60%, #0F1411 100%);
+  --cabin-card-ink:     #ECE3CF;
+  --cabin-card-ink-2:   rgba(220,210,190,0.65);
+  --cabin-card-rule:    rgba(220,210,190,0.08);
+
+  --cabin-card-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.03),
+    0 0 0 1px rgba(220,210,190,0.06),
+    0 24px 48px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   METAL TOKENS — three options. Each metal defines a face
+   gradient, a rim color, an edge highlight, and an ink color
+   for any text/glyph that sits on the metal.
+   ============================================================ */
+:root {
+  /* BRASS — warm yellow gold, default  */
+  --cabin-brass-face: radial-gradient(120% 90% at 30% 25%,
+                          #E8C887 0%, #C9A562 35%, #A07F3E 75%, #6E5524 100%);
+  --cabin-brass-rim:    #4A3614;
+  --cabin-brass-edge:   rgba(255, 230, 160, 0.45);
+  --cabin-brass-ink:    #2A1A05;
+  --cabin-brass-ink-2:  rgba(42,26,5,0.65);
+
+  /* ALUMINUM — cool brushed silver */
+  --cabin-aluminum-face: radial-gradient(120% 90% at 30% 25%,
+                          #EAE8E3 0%, #C8C6C2 35%, #9A9994 75%, #6B6A66 100%);
+  --cabin-aluminum-rim:    #3D3D3B;
+  --cabin-aluminum-edge:   rgba(255,255,255,0.55);
+  --cabin-aluminum-ink:    #1F1E1C;
+  --cabin-aluminum-ink-2:  rgba(31,30,28,0.6);
+
+  /* ROSE GOLD — pinked copper */
+  --cabin-rosegold-face: radial-gradient(120% 90% at 30% 25%,
+                          #F0CDB8 0%, #D9A28C 35%, #B07A66 75%, #7A4A3C 100%);
+  --cabin-rosegold-rim:    #4A2418;
+  --cabin-rosegold-edge:   rgba(255, 220, 200, 0.5);
+  --cabin-rosegold-ink:    #2A1208;
+  --cabin-rosegold-ink-2:  rgba(42,18,8,0.6);
+}
+
+/* ============================================================
+   GLOBAL SHELL — apply on the cabin app root
+   ============================================================ */
+.cabin {
+  background: var(--cabin-paper);
+  color: var(--cabin-ink);
+  font-family: var(--font-sans);
+  transition: background 320ms var(--ease), color 320ms var(--ease);
+}
+
+/* ============================================================
+   BEZEL FRAME — the cocoa-moss passe-partout
+   ============================================================ */
+.cabin-frame {
+  position: relative;
+  background: var(--cabin-bezel);
+  padding: clamp(28px, 4vw, 56px);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  transition: background 320ms var(--ease);
+}
+
+/* corner stamps — like cover credits */
+.cabin-stamp {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cabin-bezel-stamp);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.cabin-stamp .cabin-stamp-dot {
+  width: 5px; height: 5px;
+  background: currentColor;
+  border-radius: 0;          /* square dot — feels stamped, not bullet-listed */
+}
+.cabin-stamp[data-pos="tl"] { top: 18px; left: 22px; }
+.cabin-stamp[data-pos="tr"] { top: 18px; right: 22px; }
+.cabin-stamp[data-pos="bl"] { bottom: 18px; left: 22px; }
+.cabin-stamp[data-pos="br"] { bottom: 18px; right: 22px; }
+
+/* ============================================================
+   CARD — focal surface inside the frame
+   ============================================================ */
+.cabin-card {
+  position: relative;
+  background: var(--cabin-card);
+  color: var(--cabin-card-ink);
+  border-radius: 6px;
+  box-shadow: var(--cabin-card-shadow);
+  padding: clamp(24px, 3vw, 44px);
+  box-sizing: border-box;
+  transition: background 320ms var(--ease), color 320ms var(--ease), box-shadow 320ms var(--ease);
+}
+
+/* card credit lines — like artist/title text on a cover */
+.cabin-card-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px;
+}
+.cabin-card-head > * {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cabin-card-ink-2);
+  line-height: 1.6;
+}
+.cabin-card-head > :last-child { text-align: right; }
+
+/* ============================================================
+   HALO + TICKS — radial geometry motif
+   ============================================================ */
+.cabin-halo,
+.cabin-halo-inner {
+  position: absolute;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  pointer-events: none;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.cabin-halo       { width: 360px; height: 360px; opacity: 0.06; }
+.cabin-halo-inner { width: 240px; height: 240px; opacity: 0.10; }
+.cabin-halo-tick {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 360px; height: 360px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.18;
+}
+
+.cabin-glyph {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-variation-settings: 'opsz' 144, 'SOFT' 70, 'WONK' 1;
+  font-size: clamp(120px, 16vw, 200px);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: var(--cabin-card-ink);
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   TYPE TREATMENTS specific to cabin
+   ============================================================ */
+.cabin-display {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.6vw, 32px);
+  font-weight: 350;
+  font-variation-settings: 'opsz' 100, 'SOFT' 50;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--cabin-ink);
+}
+.cabin-blurb {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.55;
+  max-width: 36ch;
+  color: var(--cabin-ink-3);
+  margin: 0;
+}
+.cabin-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cabin-ink-3);
+}
+.cabin-mono {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--cabin-ink-3);
+}
+
+/* ============================================================
+   TRACKS — inline numbered list (pane types, breadcrumbs, nav)
+   ============================================================ */
+.cabin-tracks {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--cabin-card-rule);
+}
+.cabin-track {
+  appearance: none; border: 0; background: transparent;
+  padding: 5px 14px;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  color: var(--cabin-card-ink-2);
+  transition: color 150ms var(--ease);
+}
+.cabin-track:hover { color: var(--cabin-card-ink); }
+.cabin-track.is-on { color: var(--cabin-card-ink); }
+.cabin-track .cabin-track-num {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+.cabin-track-sep {
+  width: 1px; height: 11px;
+  background: currentColor; opacity: 0.18;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   SIDE NAV — workspace list, dot indicators, dashed-add
+   ============================================================ */
+.cabin-side {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 12px;
+  background: var(--cabin-paper);
+  border-right: 1px solid var(--cabin-rule);
+}
+.cabin-side-h {
+  font-family: var(--font-serif);
+  font-size: 14.5px; font-weight: 500;
+  margin: 6px 8px 6px;
+  color: var(--cabin-ink);
+  letter-spacing: -0.005em;
+}
+.cabin-side-group {
+  display: flex; flex-direction: column; gap: 1px;
+  padding-left: 12px;
+  border-left: 1px solid var(--cabin-rule);
+  margin: 2px 0 14px 14px;
+}
+.cabin-side-item {
+  appearance: none; border: 0; background: transparent;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font: inherit; font-size: 13px;
+  color: var(--cabin-ink-2);
+  text-align: left; width: 100%;
+  transition: background 120ms var(--ease), color 120ms var(--ease);
+}
+.cabin-side-item:hover,
+.cabin-side-item.is-on {
+  background: var(--cabin-paper-2);
+  color: var(--cabin-ink);
+}
+.cabin-side-item .cabin-side-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cabin-ink-4); flex-shrink: 0;
+}
+.cabin-side-item.is-on .cabin-side-dot { background: var(--cabin-accent); }
+.cabin-side-item .cabin-side-name {
+  flex: 1; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.cabin-side-item .cabin-side-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--cabin-ink-4);
+  letter-spacing: 0.04em;
+}
+.cabin-side-add {
+  appearance: none;
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: 1px dashed var(--cabin-rule);
+  background: transparent;
+  color: var(--cabin-ink-3);
+  font: inherit; font-size: 12.5px;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: border-color 120ms var(--ease), color 120ms var(--ease);
+}
+.cabin-side-add:hover { border-color: var(--cabin-ink-3); color: var(--cabin-ink); }
+.cabin-side-add .cabin-side-plus { color: var(--cabin-accent); font-weight: 600; }
+
+/* ============================================================
+   TOP NAV — brand caret, crumb, meta
+   ============================================================ */
+.cabin-nav {
+  display: flex; align-items: center; gap: 24px;
+  padding: 0 24px;
+  height: 56px;
+  border-bottom: 1px solid var(--cabin-rule);
+  background: var(--cabin-paper);
+}
+.cabin-brand {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  display: inline-flex; align-items: baseline; gap: 3px;
+  font-family: var(--font-serif);
+  font-size: 18px; font-weight: 500; letter-spacing: -0.01em;
+  color: var(--cabin-ink); padding: 6px 8px;
+  border-radius: 6px; margin-left: -8px;
+}
+.cabin-brand .cabin-caret { color: var(--cabin-accent); font-weight: 600; }
+.cabin-nav-divider {
+  width: 1px; height: 18px; background: var(--cabin-rule);
+}
+.cabin-crumb {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  color: var(--cabin-ink-3);
+}
+.cabin-nav-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 14px;
+}
+.cabin-nav-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--cabin-ink-4);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   BUTTONS — five shapes, each with one job.
+   ============================================================ */
+
+/* (1) Stamp — uppercase tracked sans, no fill, ink underline on hover.
+   Use for secondary actions where you want the click to feel quiet
+   and editorial. Also doubles as a small "credit" anchor. */
+.cabin-btn-stamp {
+  appearance: none; border: 0; background: transparent;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cabin-ink-3);
+  position: relative;
+  transition: color 120ms var(--ease);
+}
+.cabin-btn-stamp::after {
+  content: ""; position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  opacity: 0;
+  transition: opacity 120ms var(--ease);
+}
+.cabin-btn-stamp:hover { color: var(--cabin-ink); }
+.cabin-btn-stamp:hover::after { opacity: 0.4; }
+.cabin-btn-stamp[disabled] { color: var(--cabin-ink-4); cursor: not-allowed; }
+.cabin-btn-stamp .cabin-btn-stamp-dot {
+  width: 5px; height: 5px;
+  background: currentColor;
+}
+
+/* (2) Pill — soft rounded rect, paper-tinted bg, ink border.
+   Standard form button (submit, cancel, run, save).
+   Variants: --kind="primary" (terracotta), "ghost" (transparent). */
+.cabin-btn-pill {
+  appearance: none;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 8px 16px;
+  min-height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--cabin-rule-2);
+  background: var(--cabin-paper-inset);
+  color: var(--cabin-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition:
+    background 120ms var(--ease),
+    border-color 120ms var(--ease),
+    color 120ms var(--ease),
+    transform 80ms var(--ease);
+}
+.cabin-btn-pill:hover {
+  background: var(--cabin-paper-2);
+  border-color: var(--cabin-rule-strong);
+}
+.cabin-btn-pill:active { transform: translateY(1px); }
+.cabin-btn-pill[disabled] {
+  color: var(--cabin-ink-4);
+  background: transparent;
+  border-color: var(--cabin-rule);
+  cursor: not-allowed;
+}
+
+.cabin-btn-pill[data-kind="primary"] {
+  background: var(--cabin-accent);
+  border-color: var(--cabin-accent-deep);
+  color: #FFF7EE;
+}
+.cabin-btn-pill[data-kind="primary"]:hover {
+  background: var(--cabin-accent-deep);
+  border-color: var(--cabin-accent-deep);
+}
+.cabin-btn-pill[data-kind="ghost"] {
+  background: transparent;
+  border-color: var(--cabin-rule);
+  color: var(--cabin-ink-2);
+}
+.cabin-btn-pill[data-kind="ghost"]:hover {
+  background: var(--cabin-paper-2);
+  color: var(--cabin-ink);
+}
+
+/* size variants */
+.cabin-btn-pill[data-size="sm"] {
+  padding: 5px 10px;
+  min-height: 26px;
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cabin-btn-pill[data-size="lg"] {
+  padding: 11px 22px;
+  min-height: 40px;
+  font-size: 14px;
+}
+
+/* (3) Ghost — dashed rule, terracotta plus glyph, soft ink fill.
+   The optional/discoverable action. "+ add workspace", "new doc". */
+.cabin-btn-ghost {
+  appearance: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 12px;
+  border-radius: 5px;
+  border: 1px dashed var(--cabin-rule);
+  background: transparent;
+  color: var(--cabin-ink-3);
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: border-color 120ms var(--ease), color 120ms var(--ease);
+}
+.cabin-btn-ghost:hover {
+  border-color: var(--cabin-ink-3);
+  color: var(--cabin-ink);
+}
+.cabin-btn-ghost .cabin-btn-ghost-plus {
+  color: var(--cabin-accent);
+  font-weight: 600;
+}
+
+/* (4) Track — inline numbered button. Already styled as .cabin-track above.
+   No extra rules needed — listed here for the inventory. */
+
+/* (5) Disc — the metal disc primitive. Round, single-purpose, ceremonial.
+   Defaults to brass; swap with data-metal. */
+.cabin-disc {
+  --_disc-face: var(--cabin-brass-face);
+  --_disc-rim:  var(--cabin-brass-rim);
+  --_disc-edge: var(--cabin-brass-edge);
+  --_disc-ink:  var(--cabin-brass-ink);
+  --_disc-ink-2: var(--cabin-brass-ink-2);
+
+  appearance: none; border: 0; padding: 0;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  background: var(--_disc-face);
+  box-shadow:
+    0 0 0 1px var(--_disc-rim),
+    inset 0 1px 0 var(--_disc-edge),
+    inset 0 -3px 8px rgba(0,0,0,0.25),
+    0 6px 12px rgba(0,0,0,0.18),
+    0 1px 0 rgba(255,255,255,0.06);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--_disc-ink);
+  transition: transform 120ms var(--ease), box-shadow 120ms var(--ease), filter 200ms var(--ease);
+}
+.cabin-disc::before {
+  /* knurled rim — repeating radial ticks */
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(0,0,0,0.18) 0deg 1.4deg,
+      rgba(255,255,255,0.10) 1.4deg 3deg
+    );
+  -webkit-mask:
+    radial-gradient(circle, transparent 0, transparent calc(50% - 6px),
+                            black calc(50% - 6px), black calc(50% - 1px),
+                            transparent calc(50% - 1px), transparent 100%);
+          mask:
+    radial-gradient(circle, transparent 0, transparent calc(50% - 6px),
+                            black calc(50% - 6px), black calc(50% - 1px),
+                            transparent calc(50% - 1px), transparent 100%);
+  pointer-events: none;
+  opacity: 0.85;
+}
+.cabin-disc::after {
+  /* faint specular highlight on top-left */
+  content: "";
+  position: absolute; inset: 4px;
+  border-radius: 50%;
+  background: radial-gradient(60% 50% at 30% 20%,
+              var(--_disc-edge) 0%,
+              transparent 60%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+.cabin-disc > * { position: relative; z-index: 1; }
+.cabin-disc:hover { filter: brightness(1.05); }
+.cabin-disc:active {
+  transform: translateY(1px);
+  box-shadow:
+    0 0 0 1px var(--_disc-rim),
+    inset 0 1px 0 var(--_disc-edge),
+    inset 0 -2px 6px rgba(0,0,0,0.3),
+    0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* metal swap */
+.cabin-disc[data-metal="aluminum"] {
+  --_disc-face: var(--cabin-aluminum-face);
+  --_disc-rim:  var(--cabin-aluminum-rim);
+  --_disc-edge: var(--cabin-aluminum-edge);
+  --_disc-ink:  var(--cabin-aluminum-ink);
+  --_disc-ink-2: var(--cabin-aluminum-ink-2);
+}
+.cabin-disc[data-metal="rosegold"] {
+  --_disc-face: var(--cabin-rosegold-face);
+  --_disc-rim:  var(--cabin-rosegold-rim);
+  --_disc-edge: var(--cabin-rosegold-edge);
+  --_disc-ink:  var(--cabin-rosegold-ink);
+  --_disc-ink-2: var(--cabin-rosegold-ink-2);
+}
+
+/* size variants */
+.cabin-disc[data-size="sm"] { width: 36px; height: 36px; }
+.cabin-disc[data-size="md"] { width: 56px; height: 56px; }
+.cabin-disc[data-size="lg"] { width: 80px; height: 80px; }
+
+/* the inscription on the disc face — uppercase tracked, two lines */
+.cabin-disc-label {
+  font-family: var(--font-sans);
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.25;
+  color: var(--_disc-ink);
+  pointer-events: none;
+}
+.cabin-disc[data-size="lg"] .cabin-disc-label { font-size: 9px; }
+.cabin-disc[data-size="sm"] .cabin-disc-label { font-size: 6px; }
+
+/* a notch — small mark on the rim, indicating direction.
+   Wraps the disc in a rotation; the inner pip is drawn at the top
+   so its angle is the rotation angle. Useful for discrete states. */
+.cabin-disc-notch {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: rotate(var(--cabin-notch-deg, 0deg));
+}
+.cabin-disc-notch::before {
+  content: "";
+  position: absolute;
+  top: 4px; left: 50%;
+  width: 3px; height: 10px;
+  background: var(--_disc-ink);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   FRAME FOOT — keyboard hint row beneath the bezel
+   ============================================================ */
+.cabin-frame-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 14px;
+  padding: 0 4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cabin-ink-4);
+}
+.cabin-kbd {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 0 5px;
+  height: 16px;
+  display: inline-flex; align-items: center;
+  border: 1px solid var(--cabin-rule);
+  border-radius: 3px;
+  color: var(--cabin-ink-3);
+  background: var(--cabin-paper-2);
+  margin: 0 2px;
+}

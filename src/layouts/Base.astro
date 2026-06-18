@@ -1,0 +1,64 @@
+---
+// Self-hosted fonts (Fontsource → Vite-bundled woff2, same-origin; keeps the
+// strict CSP's `font-src 'self'`). Fraunces full = all axes (opsz/SOFT/WONK).
+import "@fontsource-variable/fraunces/full.css";
+import "@fontsource-variable/inter/standard.css";
+import "@fontsource-variable/inter/standard-italic.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
+import "../styles/colors_and_type.css";
+import "../styles/cabin.css";
+import "../styles/site.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = "C. Youngblut — operator",
+  description = "Forward-deployed engineering portfolio — one operator, one kit, N builds.",
+} = Astro.props;
+
+// Absolute URLs for canonical + social-card meta (scrapers need absolute).
+const siteUrl = Astro.site ?? new URL("https://chris-youngblut-solutions.github.io");
+const ogImage = new URL("/og.png", siteUrl).href;
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+---
+
+<!doctype html>
+<html lang="en" data-cabin="day" data-metal="brass">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Christopher Youngblut" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {/* No-FOUC theme setter — runs before paint. Its hash is covered by
+        Astro's CSP (the thing the spike must prove). Keep it tiny + stable. */}
+    <script is:inline>
+      (function () {
+        var d = document.documentElement, s = null;
+        try { s = window.localStorage; } catch (e) {}
+        var t = (s && s.getItem("cabin.theme")) ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day");
+        d.dataset.cabin = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

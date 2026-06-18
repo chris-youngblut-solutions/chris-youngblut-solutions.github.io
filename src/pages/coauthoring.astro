@@ -1,0 +1,72 @@
+---
+import Blocks from "../components/Blocks.astro";
+import CabinShell from "../layouts/CabinShell.astro";
+import type { Block } from "../data/projects";
+
+// "How I co-author with Claude" — a standalone page on the rail. Drawn from the
+// operator's reflections + the mechanism model (build the apparatus / decides).
+// Neutral register; honest about the division of labor. No internal paths/data.
+const framing =
+  "These roles run on an AI substrate, so how I work with it is part of the work. This is how I co-author with Claude: what the division of labor is, what the loop looks like, and what stays a human decision.";
+
+const blocks: Block[] = [
+  {
+    label: "the stance",
+    kind: "prose",
+    items: [
+      "I keep the decisions and the taste; Claude is the apparatus. It reads breadth, drafts, fans out across a problem, and verifies; I set the direction, own the design forks, and make the call. Seeing the board and moving a piece both stay with me.",
+    ],
+  },
+  {
+    label: "the loop",
+    kind: "layers",
+    items: [
+      "scope — `/mapit` catalogs the full option surface before anything is built; I pick the candidate to pursue.",
+      "build — `/pointit` and `/sendit` scaffold it; Claude drafts against a fixed structure and I review every fork.",
+      "gate — `/vetit` runs a sanitization sweep plus an adversarial review panel; nothing ships until it comes back CLEAR.",
+      "ship — `/shipit` flips it public with the hardening; the gate, not a feeling, authorizes the flip.",
+      "continuity — `/handoff` and `/intake` carry context across sessions, and a decision register re-opens locked calls on a cadence.",
+    ],
+  },
+  {
+    label: "how the work is checked",
+    kind: "list",
+    items: [
+      "**Verify-gated, not single-pass** — claims and drafts are checked by independent agents prompted to refute, not to confirm.",
+      "**Proof-gated** — nothing gets positioned until an artifact proves it; in-build work stays labeled in-build.",
+      "**Sanitized before publish** — a denylist grep, a secret scan, and the panel run before anything goes public.",
+      "**Honest by default** — neutral output, no flattery; a disagreement gets surfaced rather than smoothed over.",
+    ],
+  },
+  {
+    label: "build the apparatus",
+    kind: "prose",
+    items: [
+      "The leverage isn't the prompting — it's building the instruments that make the co-authoring repeatable: the skills pipeline, the adversarial review panel, a typed mechanism-graph, the eval harness. I ship the machine that produces the outputs, not just the outputs.",
+    ],
+  },
+  {
+    label: "the proof",
+    kind: "prose",
+    items: [
+      "This site, the eight public repositories, and the case studies were built this way — scoped, drafted, adversarially verified, and shipped through the same governed pipeline.",
+    ],
+  },
+];
+---
+
+<CabinShell
+  title="How I co-author with Claude — Chris Youngblut"
+  description="The division of labor, the loop, and what stays a human decision when building on an AI substrate."
+  crumb="co-authoring"
+  activeTrunk="coauthoring"
+>
+  <article class="wu cs">
+    <p class="cabin-eyebrow">co-authoring</p>
+    <h1 class="wu-title">How I co-author with Claude</h1>
+
+    <p class="cs-framing"><strong>Framing.</strong> {framing}</p>
+
+    <Blocks blocks={blocks} class="pblocks cs-blocks" />
+  </article>
+</CabinShell>

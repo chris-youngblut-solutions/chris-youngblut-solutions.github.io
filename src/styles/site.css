@@ -1,0 +1,757 @@
+/* ==========================================================================
+   site.css — portfolio-only layer. Operating-platform Shell (2-col: rail +
+   main) + umbrella cards + full-page project write-ups, authored on Cabin's
+   --cabin-* tokens so day/night theming is native. Pairs with
+   colors_and_type.css (base tokens + type) and cabin.css (--cabin-* + classes).
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--cabin-paper);
+  color: var(--cabin-ink);
+  transition:
+    background 320ms var(--ease),
+    color 320ms var(--ease);
+}
+:focus-visible {
+  outline: 2px solid var(--cabin-accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* ----------------------------------------------------------------
+   LEGACY → CABIN token remap. colors_and_type.css styles base elements
+   (.display, h1–h4, p, a, blockquote, code, ::selection) against the static
+   legacy tokens, which do NOT flip for night mode. Point those tokens at the
+   theme-aware --cabin-* tokens so every element tracks day/night. (This is the
+   bridge the design corpus warned about — needed because we ship the
+   colors_and_type element styles.)
+   ---------------------------------------------------------------- */
+:root {
+  --paper: var(--cabin-paper);
+  --paper-2: var(--cabin-paper-2);
+  --paper-3: var(--cabin-paper-3);
+  --paper-inset: var(--cabin-paper-inset);
+  --ink: var(--cabin-ink);
+  --ink-2: var(--cabin-ink-2);
+  --ink-3: var(--cabin-ink-3);
+  --ink-4: var(--cabin-ink-4);
+  --terracotta: var(--cabin-accent);
+  --terracotta-deep: var(--cabin-accent-deep);
+  --terracotta-soft: var(--cabin-accent-soft);
+  --terracotta-wash: var(--cabin-accent-wash);
+  --hairline: var(--cabin-rule);
+  --rule: var(--cabin-rule);
+  --rule-strong: var(--cabin-rule-strong);
+  --ok: var(--cabin-ok);
+  --warn: var(--cabin-warn);
+  --danger: var(--cabin-danger);
+  --info: var(--cabin-info);
+}
+
+/* ----------------------------------------------------------------
+   THE SHELL — strip / rail / main (right rail dropped).
+   ---------------------------------------------------------------- */
+.site-shell {
+  --rail-w: 232px;
+  display: grid;
+  grid-template-areas: "strip strip" "rail main";
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  grid-template-rows: 56px minmax(0, 1fr);
+  min-height: 100dvh;
+}
+.site-strip {
+  grid-area: strip;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--cabin-paper);
+  backdrop-filter: saturate(1.1);
+}
+.site-rail {
+  grid-area: rail;
+  overflow-y: auto;
+  border-right: 1px solid var(--cabin-rule);
+}
+.site-main {
+  grid-area: main;
+  overflow-y: auto;
+  padding: clamp(24px, 4vw, 56px);
+}
+.site-main-inner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+/* strip internals (rides on .cabin-nav) */
+.strip-status {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--cabin-ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* ----------------------------------------------------------------
+   THEME STAMP — editorial day/night toggle (uppercase, .cabin-btn-stamp).
+   Defaults to OS preference (auto); a click overrides + persists.
+   ---------------------------------------------------------------- */
+.theme-stamp {
+  min-width: 62px;
+  justify-content: flex-start;
+}
+.theme-stamp .theme-stamp-ico {
+  display: inline-flex;
+  align-items: center;
+  color: var(--cabin-accent);
+}
+.theme-stamp .theme-stamp-ico svg {
+  width: 13px;
+  height: 13px;
+  display: block;
+}
+
+/* ----------------------------------------------------------------
+   STATUS DOT + CHIP — honest status signals (no fake telemetry)
+   ---------------------------------------------------------------- */
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  background: var(--cabin-ink-4);
+}
+.dot[data-risk="ok"] {
+  background: var(--cabin-ok);
+}
+.dot[data-risk="warn"] {
+  background: var(--cabin-warn);
+}
+.dot[data-risk="info"] {
+  background: var(--cabin-info);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--cabin-rule-2);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  color: var(--cabin-ink-3);
+  background: var(--cabin-paper-inset);
+  white-space: nowrap;
+}
+.chip[data-kind="accent"] {
+  color: var(--cabin-accent-deep);
+  border-color: var(--cabin-accent-soft);
+  background: var(--cabin-accent-wash);
+}
+
+/* ----------------------------------------------------------------
+   UMBRELLA GRID — project umbrellas as cards (landing + /projects index).
+   ---------------------------------------------------------------- */
+.umbrella-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+.umbrella-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--cabin-rule);
+  background: var(--cabin-paper-inset);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 160ms var(--ease),
+    transform 160ms var(--ease),
+    box-shadow 160ms var(--ease);
+}
+.umbrella-card:hover {
+  border-color: var(--cabin-accent-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.umbrella-card .uc-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.umbrella-card .uc-date {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--cabin-ink-4);
+}
+.umbrella-card .uc-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 400;
+  font-variation-settings:
+    "opsz" 40,
+    "SOFT" 30;
+  color: var(--cabin-ink);
+  margin: 0;
+}
+.umbrella-card .uc-what {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cabin-ink-3);
+  margin: 0;
+}
+.umbrella-card .uc-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+/* ----------------------------------------------------------------
+   THROUGH-LINE card on the landing
+   ---------------------------------------------------------------- */
+.panel-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+.mini-card {
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid var(--cabin-rule);
+  background: var(--cabin-paper-2);
+}
+.mini-card .mini-label {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cabin-ink-3);
+  margin: 0 0 8px;
+}
+
+/* ----------------------------------------------------------------
+   PROJECT WRITE-UP — full page (/projects/[slug])
+   ---------------------------------------------------------------- */
+.wu {
+  max-width: 46rem;
+}
+.wu-back {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--cabin-ink-3);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.wu-back:hover {
+  color: var(--cabin-ink);
+}
+.wu-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.wu-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--cabin-ink-4);
+}
+.wu-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4.5vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variation-settings:
+    "opsz" 100,
+    "SOFT" 40;
+  color: var(--cabin-ink);
+  margin: 0 0 14px;
+  text-wrap: balance;
+}
+.wu-lead {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.4;
+  color: var(--cabin-ink-2);
+  margin: 0 0 8px;
+  text-wrap: pretty;
+}
+.wu-why {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--cabin-ink-3);
+  border-left: 2px solid var(--cabin-accent);
+  padding-left: 12px;
+  margin: 0 0 28px;
+}
+.wu-why .wu-why-k {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cabin-accent-deep);
+  margin-right: 6px;
+}
+.wu-body p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--cabin-ink-2);
+  margin: 0 0 1.1em;
+  max-width: 42rem;
+}
+
+/* pieces (the nested subs, full-page form) */
+.pieces {
+  margin-top: 30px;
+  border-top: 1px solid var(--cabin-rule);
+  padding-top: 22px;
+}
+.pieces-h {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cabin-ink-3);
+  margin: 0 0 16px;
+}
+.piece {
+  border-left: 1px solid var(--cabin-rule-2);
+  padding: 2px 0 2px 14px;
+  margin-bottom: 16px;
+}
+.piece-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--cabin-ink);
+  margin: 0 0 3px;
+}
+.piece-sum {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--cabin-ink-3);
+  margin: 0;
+}
+.piece-name a {
+  color: var(--cabin-ink);
+  text-decoration: none;
+}
+.piece-name a:hover {
+  color: var(--cabin-accent-deep);
+}
+.piece-repo {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cabin-accent-deep);
+  margin-left: 4px;
+}
+
+/* ----------------------------------------------------------------
+   CROSS-LINKS — umbrella write-up ↔ case study (short ↔ deep).
+   ---------------------------------------------------------------- */
+.related {
+  margin-top: 30px;
+  border-top: 1px solid var(--cabin-rule);
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.related-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--cabin-accent-deep);
+  text-decoration: none;
+}
+.related-link:hover {
+  color: var(--cabin-ink);
+}
+.related-up {
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+/* ----------------------------------------------------------------
+   STRUCTURED PROJECT BLOCKS — scannable, prompt-like: a mono section label
+   over either prose or a bulleted list. (/projects/[slug] when `blocks` set.)
+   ---------------------------------------------------------------- */
+.pblocks {
+  margin-top: 26px;
+  max-width: 44rem;
+}
+.pblock {
+  margin: 0 0 24px;
+}
+.pblock-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cabin-accent-deep);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--cabin-rule);
+}
+.pblock p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--cabin-ink-2);
+  margin: 0 0 0.7em;
+}
+.pblock p:last-child {
+  margin-bottom: 0;
+}
+.pblock ul {
+  margin: 0;
+  padding-left: 1.2em;
+  list-style: none;
+}
+.pblock li {
+  position: relative;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--cabin-ink-2);
+  margin: 0 0 0.55em;
+}
+.pblock li:last-child {
+  margin-bottom: 0;
+}
+.pblock li::before {
+  content: "—";
+  position: absolute;
+  left: -1.2em;
+  color: var(--cabin-accent);
+}
+.pblock li strong,
+.pblock p strong {
+  color: var(--cabin-ink);
+  font-weight: 600;
+}
+/* "layers in a stack" — the components block as stacked bands. */
+.layers-stack {
+  border: 1px solid var(--cabin-rule);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--cabin-paper-inset);
+}
+.layer {
+  padding: 11px 16px;
+  border-top: 1px solid var(--cabin-rule);
+}
+.layer:first-child {
+  border-top: none;
+}
+.layer-name {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cabin-ink);
+}
+.layer-desc {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--cabin-ink-3);
+}
+.layer-desc code {
+  font-size: 12px;
+}
+
+/* ----------------------------------------------------------------
+   RESPONSIVE — mobile: rail → bottom bar
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .site-shell {
+    --rail-w: 0px;
+    grid-template-areas: "strip" "main";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 52px minmax(0, 1fr);
+  }
+  .site-rail {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    z-index: 30;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--cabin-rule);
+    border-right: 0;
+    background: var(--cabin-paper);
+    overflow: visible;
+  }
+  .site-main {
+    padding-bottom: 76px;
+  }
+}
+
+/* ----------------------------------------------------------------
+   MOTION — respect reduced-motion (neutralize Cabin's 320ms transitions)
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ----------------------------------------------------------------
+   CASE-STUDY BODY — rendered markdown (/writing/[slug]). Element styles
+   (h2 / p / a / code / pre / hr) come from colors_and_type.css remapped to
+   --cabin-* in this file; this layer adds vertical rhythm, list styling, and
+   a quieter treatment for the `> **Framing.**` note than the big pullquote.
+   ---------------------------------------------------------------- */
+.cs {
+  max-width: 46rem;
+}
+/* Mechanism-view lead: a quiet framing wrapper, then the structured blocks,
+   then the detail body under a labelled rule. */
+.cs-framing {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variation-settings:
+    "opsz" 40,
+    "SOFT" 40;
+  color: var(--cabin-ink-2);
+  border-left: 2px solid var(--cabin-accent);
+  padding: 2px 0 2px 16px;
+  margin: 0 0 26px;
+  max-width: 42rem;
+}
+.cs-framing strong {
+  color: var(--cabin-accent-deep);
+}
+.cs-blocks {
+  margin-top: 0;
+}
+.cs-body {
+  max-width: 42rem;
+}
+.cs-body-detail {
+  margin-top: 32px;
+  border-top: 1px solid var(--cabin-rule);
+  padding-top: 22px;
+}
+.cs-detail-label {
+  margin-top: 0;
+}
+.cs-body-detail .cs-detail-label + * {
+  margin-top: 0;
+}
+.cs-body > :first-child {
+  margin-top: 0;
+}
+.cs-body h2 {
+  font-size: var(--t-h3);
+  margin: 1.7em 0 0.5em;
+}
+.cs-body p {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--cabin-ink-2);
+  margin: 0 0 1.05em;
+}
+.cs-body ul {
+  margin: 0 0 1.1em;
+  padding-left: 1.2em;
+  list-style: none;
+}
+.cs-body li {
+  position: relative;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--cabin-ink-2);
+  margin: 0 0 0.5em;
+}
+.cs-body li::before {
+  content: "—";
+  position: absolute;
+  left: -1.2em;
+  color: var(--cabin-accent);
+}
+.cs-body strong {
+  color: var(--cabin-ink);
+  font-weight: 600;
+}
+.cs-body hr {
+  margin: 1.4em 0 1.6em;
+}
+/* The Framing note — a short positioned wrapper, not a loud pullquote. */
+.cs-body blockquote {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  font-variation-settings:
+    "opsz" 40,
+    "SOFT" 40;
+  color: var(--cabin-ink-2);
+  border-left: 2px solid var(--cabin-accent);
+  padding: 2px 0 2px 16px;
+  margin: 0 0 1.2em;
+}
+.cs-body blockquote strong {
+  color: var(--cabin-accent-deep);
+}
+.cs-body h3 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 1.4em 0 0.4em;
+  color: var(--cabin-ink);
+}
+/* Tables — technical data in the Cabin look. Markdown alignment arrives as
+   `align="right"` attributes (no inline styles, CSP-safe). display:block lets
+   wide numeric tables scroll horizontally on narrow screens. */
+.cs-body table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.3em 0 1.7em;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+.cs-body thead th {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--cabin-ink-3);
+  padding: 0 16px 6px 0;
+  border-bottom: 1px solid var(--cabin-rule-strong);
+  white-space: nowrap;
+}
+.cs-body tbody td {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--cabin-ink-2);
+  padding: 5px 16px 5px 0;
+  border-bottom: 1px solid var(--cabin-rule);
+  white-space: nowrap;
+}
+.cs-body tbody tr:last-child td {
+  border-bottom: none;
+}
+.cs-body th[align="right"],
+.cs-body td[align="right"] {
+  text-align: right;
+}
+.cs-body tbody td:first-child {
+  color: var(--cabin-ink);
+}
+
+/* ----------------------------------------------------------------
+   RÉSUMÉ BODY — rendered markdown (/cv). Tighter rhythm than a case study;
+   section rules, job-title h3s, and a serif headline statement.
+   ---------------------------------------------------------------- */
+.cv-body {
+  max-width: 44rem;
+}
+.cv-body > :first-child {
+  margin-top: 0;
+}
+.cv-body h1 {
+  margin: 0 0 2px;
+}
+.cv-body h2 {
+  font-size: var(--t-h3);
+  margin: 1.8em 0 0.6em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--cabin-rule);
+}
+.cv-body h3 {
+  margin: 1.3em 0 0.15em;
+  font-size: 15.5px;
+}
+.cv-body blockquote {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: clamp(17px, 2vw, 20px);
+  line-height: 1.4;
+  color: var(--cabin-ink-2);
+  border-left: 2px solid var(--cabin-accent);
+  padding-left: 16px;
+  margin: 1em 0 0;
+  font-variation-settings:
+    "opsz" 60,
+    "SOFT" 40;
+}
+.cv-body p {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--cabin-ink-2);
+  margin: 0 0 0.6em;
+}
+.cv-body em {
+  color: var(--cabin-ink-3);
+  font-style: italic;
+}
+.cv-body ul {
+  margin: 0.3em 0 1em;
+  padding-left: 1.1em;
+  list-style: none;
+}
+.cv-body li {
+  position: relative;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--cabin-ink-2);
+  margin: 0 0 0.4em;
+}
+.cv-body li::before {
+  content: "–";
+  position: absolute;
+  left: -1.1em;
+  color: var(--cabin-accent);
+}
+.cv-body strong {
+  color: var(--cabin-ink);
+  font-weight: 600;
+}
+.cv-body hr {
+  margin: 1.2em 0;
+}
+.cv-body a {
+  word-break: break-word;
+}

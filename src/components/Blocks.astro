@@ -1,0 +1,57 @@
+---
+// Shared structured-block renderer — the scannable, prompt-like blocks used on
+// both the project write-ups (/projects/[slug]) and the case studies
+// (/writing/[slug]). A mono section label over prose, a bulleted list, or a
+// "layers in a stack" band. inline() server-renders **bold**/`code` into the
+// static HTML, so the strict CSP (no inline scripts/styles) is unaffected.
+import type { Block } from "../data/projects";
+
+interface Props {
+  blocks: Block[];
+  class?: string;
+}
+const { blocks, class: cls = "pblocks" } = Astro.props;
+
+function inline(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+---
+
+<div class={cls}>
+  {
+    blocks.map((b) => (
+      <section class="pblock">
+        <p class="pblock-label">{b.label}</p>
+        {b.kind === "layers" ? (
+          <div class="layers-stack">
+            {b.items.map((it) => {
+              const i = it.indexOf(" — ");
+              const name = i >= 0 ? it.slice(0, i) : it;
+              const desc = i >= 0 ? it.slice(i + 3) : "";
+              return (
+                <div class="layer">
+                  <span class="layer-name">{name}</span>
+                  {desc && <span class="layer-desc" set:html={` — ${inline(desc)}`} />}
+                </div>
+              );
+            })}
+          </div>
+        ) : b.kind === "list" ? (
+          <ul>
+            {b.items.map((it) => (
+              <li set:html={inline(it)} />
+            ))}
+          </ul>
+        ) : (
+          b.items.map((it) => <p set:html={inline(it)} />)
+        )}
+      </section>
+    ))
+  }
+</div>

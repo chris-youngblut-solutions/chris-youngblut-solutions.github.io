@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+# Interim host: builds the Astro/Cabin site and deploys it to GitHub Pages at
+# the user-site (chris-youngblut-solutions.github.io). The same dist/ later
+# deploys to the self-hosted VRTX/Caddy host — only the host changes.
+# Repo Settings → Pages → Source must be set to "GitHub Actions" (one-time).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deploy; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # withastro/action auto-detects pnpm from pnpm-lock.yaml, installs,
+      # runs `astro build`, and uploads the Pages artifact from ./dist.
+      - uses: withastro/action@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
