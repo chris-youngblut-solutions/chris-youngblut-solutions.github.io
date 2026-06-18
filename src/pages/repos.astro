@@ -1,0 +1,50 @@
+---
+import { repos } from "../data/repos";
+import { getProject } from "../data/projects";
+import CabinShell from "../layouts/CabinShell.astro";
+
+const sorted = [...repos].sort((a, b) =>
+  a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+);
+---
+
+<CabinShell
+  title="Repos — Chris Youngblut"
+  description="Public repositories — links, language, license, and a one-line summary each."
+  crumb="repos"
+  activeTrunk="repos"
+>
+  <p class="cabin-eyebrow">repos</p>
+  <h1 class="display">Public repositories</h1>
+  <p class="repos-lede">
+    Eight public repos — the code behind the projects and case studies. Dual-licensed
+    Apache-2.0 OR MIT unless noted.
+  </p>
+
+  <div class="umbrella-grid">
+    {
+      sorted.map((r) => {
+        const proj = getProject(r.project);
+        return (
+          <div class="umbrella-card repo-card">
+            <div class="uc-head">
+              <a class="repo-name" href={r.url}>
+                {r.name} <span class="piece-repo">↗</span>
+              </a>
+              <span class="uc-date">{r.lang}</span>
+            </div>
+            <p class="uc-what">{r.summary}</p>
+            <div class="uc-foot">
+              <span class="chip">{r.license}</span>
+              {proj && (
+                <a class="chip" data-kind="accent" href={`/projects/${proj.slug}`}>
+                  {proj.name} →
+                </a>
+              )}
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</CabinShell>
