@@ -19,7 +19,6 @@ const entries = (await getCollection("caseStudies")).sort(
       entries.map((e) => (
         <a class="umbrella-card" href={`/writing/${e.id}`}>
           <div class="uc-head">
-            <span class="uc-date">{e.data.date}</span>
             {e.data.repo && (
               <span class="chip" data-kind="accent">
                 {e.data.repo.name}

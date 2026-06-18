@@ -22,7 +22,6 @@ const sorted = [...projects].sort((a, b) =>
       sorted.map((p) => (
         <a class="umbrella-card" href={`/projects/${p.slug}`}>
           <div class="uc-head">
-            <span class="uc-date">{p.date}</span>
             {p.tag && (
               <span class="chip" data-kind="accent">
                 {p.tag}

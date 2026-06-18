@@ -55,7 +55,6 @@ const blocks = [...(mech?.blocks ?? [])].sort(
     }
 
     <div class="wu-eyebrow">
-      <span class="wu-date">{entry.data.date}</span>
       {entry.data.lenses.map((l) => <span class="chip">{l}</span>)}
       {
         entry.data.repo && (
