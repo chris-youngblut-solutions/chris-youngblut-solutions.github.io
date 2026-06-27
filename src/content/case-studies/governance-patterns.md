@@ -1,12 +1,12 @@
 ---
 title: Two governance patterns
-summary: An adversarial multi-judge review panel and an access-control-plus-reconciliation pattern — instruments that make a rule hold in practice.
+summary: An adversarial multi-judge review panel and an access-control-plus-reconciliation pattern — instruments that keep a rule enforced.
 date: "2026-06-17"
 lenses: [governance, safety]
 order: 5
 ---
 
-Two governance patterns — instruments that make a rule hold in practice rather than on paper.
+Two governance patterns — instruments that keep a rule enforced.
 
 ## ship-panel — an adversarial review panel
 
@@ -36,7 +36,7 @@ A governance shape: pair every access control with a standing reconciliation loo
 
 The control alone answers one question at one instant: may this identity in, right now. It does not answer whether the set of identities it currently admits is still the set that should be admitted. Those drift apart over time — a grant outlives the reason it was issued, a role changes without the corresponding access changing, an exception meant to be temporary becomes permanent because nothing removes it. A control with no second half degrades silently, because nothing in the grant-or-deny path is responsible for noticing that the standing set has gone stale.
 
-The reconciliation loop is that second half. It runs on a cadence independent of any single access event, compares the granted set against the intended set, and emits the delta — entries that are present but should not be, and entries that should be present but are not. The loop does not have to revoke automatically to do its job; surfacing the drift is what converts a silent divergence into a visible, actionable one. The cadence is what makes the policy bite: a rule that is checked only when written is a declaration, while a rule that is re-checked on a schedule is enforced.
+The reconciliation loop is that second half. It runs on a cadence independent of any single access event, compares the granted set against the intended set, and emits the delta — entries that are present but should not be, and entries that should be present but are not. The loop does not have to revoke automatically to do its job; surfacing the drift is what converts a silent divergence into a visible, actionable one. The cadence is what does the enforcing: a rule that is checked only when written is a declaration, while a rule that is re-checked on a schedule is enforced.
 
 ### Origin and generalization
 

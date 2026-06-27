@@ -37,7 +37,7 @@ export const repos: Repo[] = [
     license: "Apache-2.0 / MIT",
     summary:
       "Reproducible llama.cpp benchmark harness and raw results for the AMD gfx1150 iGPU — a roofline, an 8-model ROCm-vs-Vulkan matrix, and a 2.43× speculative-decoding result.",
-    project: "inference-tuning",
+    project: "ai-infrastructure",
   },
   {
     name: "dbt-semantic-mcp",

@@ -4,12 +4,13 @@
 // a short umbrella and a long case study; these maps wire short ↔ deep so the
 // two sections aren't siloed. One umbrella may map to several case studies.
 export const projectToCaseStudies: Record<string, string[]> = {
-  "inference-tuning": ["gfx1150-inference"],
+  "ai-infrastructure": ["gfx1150-inference"],
   interfaces: ["spaces"],
   "governance-trust-safety": ["governance-patterns", "rca-enforcement-model"],
   "industrial-off-highway": ["industrial-edge"],
   "dev-pipeline": ["pipeline-methodology"],
   "data-bi": ["cartography-and-graphs"],
+  secondchair: ["secondchair"],
 };
 
 // Reverse index: case-study slug → its umbrella slug.

@@ -19,22 +19,14 @@ const project = caseStudyToProject[entry.id]
   ? getProject(caseStudyToProject[entry.id])
   : undefined;
 
-// Problem-class lead, rendered in a fixed on-page order. The data order in
-// case-study-mechanisms.ts is authoritative for CONTENT; CS_BLOCK_ORDER fixes the
-// sequence uniformly across all case studies (edit here to reorder). Unknown
-// labels fall to the end in their data order.
-const CS_BLOCK_ORDER = [
-  "the problem",
-  "obstacles & nuance",
-  "mapping the universe",
-  "the solution stack",
-  "where it lands",
-];
+// Case-study layout: lead with the problem, then the full detail (the markdown
+// body), then open to the bigger picture ("where it generalizes"). The three
+// middle summary blocks (solution stack / obstacles & nuance / mapping the
+// universe) are folded into the detail — the full writeup already covers them.
 const mech = caseStudyMechanisms[entry.id];
-const blocks = [...(mech?.blocks ?? [])].sort(
-  (a, b) =>
-    (CS_BLOCK_ORDER.indexOf(a.label) + 1 || 99) - (CS_BLOCK_ORDER.indexOf(b.label) + 1 || 99),
-);
+const mblocks = mech?.blocks ?? [];
+const problemBlock = mblocks.find((b) => b.label === "the problem");
+const generalizesBlock = mblocks.find((b) => b.label === "where it generalizes");
 ---
 
 <CabinShell
@@ -67,11 +59,13 @@ const blocks = [...(mech?.blocks ?? [])].sort(
 
     <h1 class="wu-title">{entry.data.title}</h1>
 
-    {blocks.length > 0 && <Blocks blocks={blocks} class="pblocks cs-blocks" />}
+    {problemBlock && <Blocks blocks={[problemBlock]} class="pblocks cs-blocks" />}
 
-    <div class:list={["cs-body", blocks.length > 0 && "cs-body-detail"]}>
-      {blocks.length > 0 && <p class="pblock-label cs-detail-label">the detail</p>}
+    <div class:list={["cs-body", problemBlock && "cs-body-detail"]}>
+      {problemBlock && <p class="pblock-label cs-detail-label">the detail</p>}
       <Content />
     </div>
+
+    {generalizesBlock && <Blocks blocks={[generalizesBlock]} class="pblocks cs-blocks cs-blocks-close" />}
   </article>
 </CabinShell>

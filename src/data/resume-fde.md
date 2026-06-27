@@ -3,13 +3,13 @@
 
 Portfolio: chris-youngblut-solutions.github.io · linkedin.com/in/chris-youngblut-solutions · christopheryoungblut@gmail.com · Remote (US)
 
-> **Forward-deployed engineer who reads a system by its mechanism and builds the tool that fills the negative space — across industrial automation, trust & safety at platform scale, and managed AI-services.**
+> **Forward-deployed engineer who reads a system by how it works and builds the part it's missing — across industrial automation, trust & safety at platform scale, and managed AI-services.**
 
 ---
 
 ## Selected work
 
-- **Legal-AI system for a solo-attorney practice** — built the system the practice needed: an MCP (Model Context Protocol) server + a knowledge-graph + vector store with privilege-aware hybrid retrieval (dense + sparse + late-interaction), document-access enforced as a code-level gate. In production; supported a matter that reached the Iowa Supreme Court.
+- **Legal-AI system for a solo-attorney practice** — built the system the practice needed: an MCP (Model Context Protocol) server exposing case-work tools to Claude, over a Neo4j knowledge graph (Cypher) + Qdrant vector store with privilege-aware BGE-M3 hybrid retrieval (dense + sparse + late-interaction); document-access enforced as a code-level gate. In production; supported a matter that reached the Iowa Supreme Court.
 - **Claude Code dev-platform toolkit** — a project-lifecycle promotion ladder (scope → private → public), guardrail hooks, session-continuity, and decision-encoding templates; stands up and governs every project in this list.
 - **`workspace-warden`** — Linux workspace-orchestration daemon in Rust (cgroup-v2 freezer, D-Bus IPC, systemd, async state machine; 1,836 LoC, integration-tested on live cgroup slices).
 - **`agent-harness`** — an MCP agent-supervision daemon exposing local-LLM / agent runtime as native tools and supervising the serving stack.
@@ -50,6 +50,6 @@ Portfolio: chris-youngblut-solutions.github.io · linkedin.com/in/chris-youngblu
 
 **Build / agents:** Claude Code skills + Agent SDK · MCP (Model Context Protocol) servers · project-lifecycle tooling · Python · Rust (D-Bus, cgroups, systemd) · FastAPI
 
-**AI / infra:** LLM serving (vLLM, multi-GPU routing) · RAG / retrieval-augmented generation (hybrid dense + sparse + late-interaction over a vector + graph store) · GPU performance engineering (ROCm/Vulkan) · Proxmox / Dell iDRAC (RACADM/Redfish) · Ansible / IaC (infrastructure-as-code) · Tailscale · observability
+**AI / infra:** LLM serving (vLLM, multi-GPU routing) · RAG / retrieval-augmented generation (BGE-M3 hybrid: dense + sparse + late-interaction over Qdrant + Neo4j) · GPU performance engineering (ROCm/Vulkan) · Proxmox / Dell iDRAC (RACADM/Redfish) · Ansible / IaC (infrastructure-as-code) · Tailscale · observability
 
 **Domain:** Trust & Safety + abuse/risk at scale · industrial automation (pneumatic/hydraulic) · CAN/ISOBUS · CI/CD + signed releases · technical writing / SOPs

@@ -162,13 +162,24 @@ body {
   background: var(--cabin-accent-wash);
 }
 
-/* Landing lede — the mechanism statement, scaled ~20% down from the display
-   token (landing only; /about's h1 keeps the full display size). */
+/* Landing lede — scaled down from the display token for a calmer hero
+   (landing only; /about's h1 keeps the full display size). */
 .index-lede {
-  font-size: calc(var(--t-display) * 0.8);
+  font-size: calc(var(--t-display) * 0.62);
   font-variation-settings:
-    "opsz" 110,
+    "opsz" 90,
     "SOFT" 50;
+}
+/* Landing sub-line — a quiet explaining sentence under the hero. */
+.index-sub {
+  font-family: var(--font-serif);
+  font-weight: 350;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.5;
+  color: var(--cabin-ink-3);
+  max-width: 46rem;
+  margin: 10px 0 0;
+  text-wrap: pretty;
 }
 
 /* ----------------------------------------------------------------
@@ -341,22 +352,6 @@ body {
   color: var(--cabin-ink-2);
   margin: 0 0 8px;
   text-wrap: pretty;
-}
-.wu-why {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: var(--cabin-ink-3);
-  border-left: 2px solid var(--cabin-accent);
-  padding-left: 12px;
-  margin: 0 0 28px;
-}
-.wu-why .wu-why-k {
-  font-family: var(--font-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--cabin-accent-deep);
-  margin-right: 6px;
 }
 .wu-body p {
   font-size: 15px;
@@ -583,8 +578,21 @@ body {
 .cs-blocks {
   margin-top: 0;
 }
+/* Closing "where it generalizes" block — sits after the detail; give it air. */
+.cs-blocks-close {
+  margin-top: clamp(36px, 5vw, 60px);
+}
 .cs-body {
   max-width: 42rem;
+}
+/* Case-study images (e.g. the cartography universe map) — framed, full-width. */
+.cs-body img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em 0;
+  border: 1px solid var(--cabin-rule);
+  border-radius: 6px;
 }
 .cs-body-detail {
   margin-top: 32px;

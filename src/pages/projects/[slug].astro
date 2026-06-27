@@ -17,19 +17,6 @@ const subs = p.subs
   ? [...p.subs].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }))
   : [];
 
-// Public repos that back specific pieces — linked out to GitHub so the
-// Projects section points into the actual code.
-const PUBLIC_REPOS: Record<string, string> = {
-  "opendbc-ag": "https://github.com/chris-youngblut-solutions/opendbc-ag",
-  voicekb: "https://github.com/chris-youngblut-solutions/VoiceKB",
-  "agentic-eval-harness": "https://github.com/chris-youngblut-solutions/agentic-eval-harness",
-  "kpi-console": "https://github.com/chris-youngblut-solutions/kpi-console",
-  "dbt-semantic-mcp": "https://github.com/chris-youngblut-solutions/dbt-semantic-mcp",
-  "gfx1150-bench": "https://github.com/chris-youngblut-solutions/gfx1150-bench",
-  "spec-renderer": "https://github.com/chris-youngblut-solutions/spec-renderer",
-  "okf-pack": "https://github.com/chris-youngblut-solutions/okf-pack",
-};
-
 // Cross-link: the deep case studies that go with this umbrella (short → long).
 const allCaseStudies = await getCollection("caseStudies");
 const related = (projectToCaseStudies[p.slug] ?? [])
@@ -54,7 +41,6 @@ const blocks = p.blocks ?? [];
 
     <h1 class="wu-title">{p.name}</h1>
     <p class="wu-lead">{p.what}</p>
-    <p class="wu-why"><span class="wu-why-k">why</span>{p.why}</p>
 
     {
       blocks.length > 0 ? (
@@ -67,15 +53,7 @@ const blocks = p.blocks ?? [];
               <p class="pieces-h">the pieces</p>
               {subs.map((s) => (
                 <div class="piece">
-                  <p class="piece-name">
-                    {PUBLIC_REPOS[s.name] ? (
-                      <a href={PUBLIC_REPOS[s.name]}>
-                        {s.name} <span class="piece-repo">public ↗</span>
-                      </a>
-                    ) : (
-                      s.name
-                    )}
-                  </p>
+                  <p class="piece-name">{s.name}</p>
                   <p class="piece-sum">{s.summary}</p>
                 </div>
               ))}
