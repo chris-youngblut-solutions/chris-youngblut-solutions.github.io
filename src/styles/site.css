@@ -62,12 +62,20 @@ body {
    THE SHELL — strip / rail / main (right rail dropped).
    ---------------------------------------------------------------- */
 .site-shell {
-  --rail-w: 232px;
+  --rail-w: 180px;
   display: grid;
   grid-template-areas: "strip strip" "rail main";
   grid-template-columns: var(--rail-w) minmax(0, 1fr);
   grid-template-rows: 56px minmax(0, 1fr);
   min-height: 100dvh;
+}
+/* Rail collapse — toggled by clicking the brand name (data-rail on <html>,
+   persisted as cabin.rail, restored pre-paint by the no-FOUC script). */
+[data-rail="collapsed"] .site-shell {
+  grid-template-columns: 0 minmax(0, 1fr);
+}
+[data-rail="collapsed"] .site-rail {
+  display: none;
 }
 .site-strip {
   grid-area: strip;

@@ -2,7 +2,7 @@
    CABIN — design system
    --------------------------------------------------------------------------
    Cabin is a warm, paper-forward operating system aesthetic. Album-cover
-   framing, knurled brass switches, serif display, terracotta accents.
+   framing, knurled brass switches, serif display, burgundy accents.
    This is the canonical token + class library. Components consume only
    --cabin-* tokens (and font families inherited from colors_and_type.css).
 
@@ -33,11 +33,17 @@
   --cabin-rule-2:       rgba(60,30,15,0.18);
   --cabin-rule-strong:  rgba(60,30,15,0.28);
 
-  /* accent */
-  --cabin-accent:       #B85A3E;
-  --cabin-accent-deep:  #8E4530;
-  --cabin-accent-soft:  rgba(184,90,62,0.14);
-  --cabin-accent-wash:  rgba(184,90,62,0.06);
+  /* accent — muted burgundy (2026-07-01, was terracotta #B85A3E/#8E4530).
+     Same register as the old terracotta: hue moved ~14°→347°, sat/light kept. */
+  --cabin-accent:       #A04155;
+  --cabin-accent-deep:  #842E42;
+  --cabin-accent-soft:  rgba(160,65,85,0.14);
+  --cabin-accent-wash:  rgba(160,65,85,0.06);
+
+  /* moss — the rail-dot family (day) */
+  --cabin-moss:         #5F6B3D;
+  --cabin-moss-hi:      #8A9A58;
+  --cabin-moss-lo:      #46512C;
 
   /* the bezel — frame around focal artifacts */
   --cabin-bezel:        #6B3D30;
@@ -79,10 +85,15 @@
   --cabin-rule-2:       rgba(220,210,190,0.16);
   --cabin-rule-strong:  rgba(220,210,190,0.28);
 
-  --cabin-accent:       #D97757;
-  --cabin-accent-deep:  #B85A3E;
-  --cabin-accent-soft:  rgba(217,119,87,0.16);
-  --cabin-accent-wash:  rgba(217,119,87,0.06);
+  --cabin-accent:       #C96578;
+  --cabin-accent-deep:  #A04155;
+  --cabin-accent-soft:  rgba(201,101,120,0.16);
+  --cabin-accent-wash:  rgba(201,101,120,0.06);
+
+  /* moss — night: lifted for contrast on dark paper */
+  --cabin-moss:         #6B7845;
+  --cabin-moss-hi:      #93A363;
+  --cabin-moss-lo:      #3E4827;
 
   --cabin-bezel:        #1A211E;
   --cabin-bezel-edge:   rgba(0,0,0,0.4);
@@ -309,8 +320,8 @@
    SIDE NAV — workspace list, dot indicators, dashed-add
    ============================================================ */
 .cabin-side {
-  display: flex; flex-direction: column; gap: 4px;
-  padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 8px;
   background: var(--cabin-paper);
   border-right: 1px solid var(--cabin-rule);
 }
@@ -329,11 +340,11 @@
 }
 .cabin-side-item {
   appearance: none; border: 0; background: transparent;
-  display: flex; align-items: center; gap: 10px;
-  padding: 7px 10px;
+  display: flex; align-items: center; gap: 9px;
+  padding: 6px 8px;
   border-radius: 5px;
   cursor: pointer;
-  font: inherit; font-size: 13px;
+  font: inherit; font-size: 12.5px;
   color: var(--cabin-ink-2);
   text-align: left; width: 100%;
   transition: background 120ms var(--ease), color 120ms var(--ease);
@@ -345,9 +356,14 @@
 }
 .cabin-side-item .cabin-side-dot {
   width: 6px; height: 6px; border-radius: 50%;
-  background: var(--cabin-ink-4); flex-shrink: 0;
+  background: radial-gradient(circle at 32% 30%,
+    var(--cabin-moss-hi), var(--cabin-moss) 55%, var(--cabin-moss-lo));
+  flex-shrink: 0;
 }
-.cabin-side-item.is-on .cabin-side-dot { background: var(--cabin-accent); }
+.cabin-side-item.is-on .cabin-side-dot {
+  width: 7px; height: 7px;
+  box-shadow: 0 0 0 2px var(--cabin-accent-soft);
+}
 .cabin-side-item .cabin-side-name {
   flex: 1; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;

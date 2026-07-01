@@ -25,7 +25,13 @@ const trunks = [
 <Base title={title} description={description}>
   <div class="site-shell">
     <header class="site-strip cabin-nav">
-      <a class="cabin-brand" href="/"><span class="cabin-caret">^</span>youngblut</a>
+      <button
+        type="button"
+        class="cabin-brand"
+        id="rail-toggle"
+        aria-controls="site-rail"
+        aria-expanded="true"
+        aria-label="Toggle menu"><span class="cabin-caret">^</span>youngblut</button>
       <span class="cabin-nav-divider"></span>
       <span class="cabin-crumb">{crumb}</span>
       <div class="cabin-nav-right">
@@ -34,7 +40,7 @@ const trunks = [
       </div>
     </header>
 
-    <nav class="site-rail cabin-side" aria-label="Sections">
+    <nav class="site-rail cabin-side" id="site-rail" aria-label="Sections">
       {
         trunks.map((t) => (
           <a
@@ -54,4 +60,23 @@ const trunks = [
       </div>
     </main>
   </div>
+
+  {/* Rail collapse — brand click toggles; state persisted (cabin.rail) and
+      restored pre-paint by the Base no-FOUC script. Bundled + CSP-hashed. */}
+  <script>
+    const KEY = "cabin.rail";
+    const btn = document.getElementById("rail-toggle");
+    const root = document.documentElement;
+    btn?.setAttribute("aria-expanded", String(root.dataset.rail !== "collapsed"));
+    btn?.addEventListener("click", () => {
+      const next = root.dataset.rail === "collapsed" ? "open" : "collapsed";
+      root.dataset.rail = next;
+      btn.setAttribute("aria-expanded", String(next !== "collapsed"));
+      try {
+        localStorage.setItem(KEY, next);
+      } catch {
+        /* private mode — non-fatal */
+      }
+    });
+  </script>
 </Base>
