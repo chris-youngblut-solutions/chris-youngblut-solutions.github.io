@@ -8,16 +8,16 @@ interface Props {
   crumb?: string;
   activeTrunk?: string;
 }
-const { title, description, crumb = "home", activeTrunk = "projects" } = Astro.props;
+const { title, description, crumb = "home", activeTrunk = "about" } = Astro.props;
 
 // Left-rail trunks. Each points at a real v1 section (no dangling anchors).
-// Alphabetized for display.
+// About is the landing (/); alphabetized for display.
 const trunks = [
-  { id: "projects", name: "Projects", href: "/" },
+  { id: "projects", name: "Projects", href: "/projects" },
   { id: "writing", name: "Writing", href: "/writing" },
   { id: "repos", name: "Repos", href: "/repos" },
   { id: "coauthoring", name: "Co-authoring", href: "/coauthoring" },
-  { id: "about", name: "About", href: "/about" },
+  { id: "about", name: "About", href: "/" },
   { id: "resume", name: "Résumé", href: "/cv" },
 ].sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
 ---

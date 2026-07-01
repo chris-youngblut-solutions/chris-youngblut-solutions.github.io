@@ -1,0 +1,57 @@
+---
+import { projects } from "../../data/projects";
+import CabinShell from "../../layouts/CabinShell.astro";
+
+// Reviewer-facing order: lead with what an FDE / AI-eng reviewer screens for
+// first (production agents, forward-deployed delivery, trust & safety), then the
+// supporting capabilities. Unknown slugs fall to the end in their data order.
+const ORDER = [
+  "agent-infrastructure", // Production agents & evaluation
+  "secondchair", // Forward-deployed delivery
+  "governance-trust-safety", // Trust, safety & governance
+  "data-bi", // Data & semantic layer
+  "ai-infrastructure", // AI Infrastructure
+  "industrial-off-highway", // Ag / Industrial
+  "dev-pipeline", // CI/CD
+  "interfaces", // UX
+];
+const sorted = [...projects].sort(
+  (a, b) => (ORDER.indexOf(a.slug) + 1 || 99) - (ORDER.indexOf(b.slug) + 1 || 99),
+);
+---
+
+<CabinShell
+  title="Projects — C. Youngblut"
+  crumb="projects"
+  activeTrunk="projects"
+>
+  <p class="cabin-eyebrow">projects</p>
+  <h1 class="display index-lede">
+    Tools, infrastructure, and the gates that ship them.
+  </h1>
+  <p class="index-sub">
+    Forward-deployed tooling, built and run on owned AI infrastructure.
+  </p>
+
+  <div class="umbrella-grid">
+    {
+      sorted.map((p) => (
+        <a class="umbrella-card" href={`/projects/${p.slug}`}>
+          <div class="uc-head">
+            {p.tag && (
+              <span class="chip" data-kind="accent">
+                {p.tag}
+              </span>
+            )}
+          </div>
+          <h2 class="uc-name">{p.name}</h2>
+          <p class="uc-what">{p.what}</p>
+          <div class="uc-foot">
+            {p.subs && <span class="chip">{p.subs.length} pieces</span>}
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+</CabinShell>

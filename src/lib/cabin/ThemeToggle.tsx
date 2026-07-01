@@ -1,28 +1,26 @@
 import { useEffect, useState } from "react";
 import { type Cabin, currentCabin, setCabin } from "../theme";
 
-// Editorial day/night stamp (uppercase, Cabin's .cabin-btn-stamp). Defaults to
-// the OS preference (auto — set pre-paint by the no-FOUC script); a click
-// overrides + persists. Day/night only. No inline styles (CSP-safe).
-function Sun() {
+// Minimalist lightbulb day/night toggle — the bulb IS the button. Day = lit
+// (filled, accent) bulb; night = outline (off). Defaults to the OS preference
+// (auto — set pre-paint by the no-FOUC script); a click overrides + persists.
+// Day/night only. No inline styles (CSP-safe).
+function Bulb({ lit }: { lit: boolean }) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2.2"
+      strokeWidth="1.8"
       strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
     >
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M19.4 4.6l-1.8 1.8M6.4 17.6l-1.8 1.8" />
-    </svg>
-  );
-}
-function Moon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+      <path
+        d="M12 3a6 6 0 0 0-3.9 10.55c.55.5.9 1.28.9 2.05v.4h6v-.4c0-.77.35-1.55.9-2.05A6 6 0 0 0 12 3z"
+        fill={lit ? "currentColor" : "none"}
+      />
+      <path d="M9.5 19.5h5M10.5 22h3" />
     </svg>
   );
 }
@@ -43,14 +41,14 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
-      className="cabin-btn-stamp theme-stamp"
+      className="theme-bulb"
       role="switch"
       aria-checked={night}
       aria-label="Toggle night mode"
+      title={night ? "Lights on" : "Lights off"}
       onClick={toggle}
     >
-      <span className="theme-stamp-ico">{night ? <Moon /> : <Sun />}</span>
-      {night ? "Night" : "Day"}
+      <Bulb lit={!night} />
     </button>
   );
 }

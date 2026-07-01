@@ -10,6 +10,8 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://chris-youngblut-solutions.github.io",
   output: "static",
+  // About became the landing (2026-07-01); keep the old route resolving.
+  redirects: { "/about": "/" },
   integrations: [react(), sitemap()],
   prefetch: { defaultStrategy: "viewport" },
   // Prism (class-based) instead of Shiki (inline styles) so case-study code

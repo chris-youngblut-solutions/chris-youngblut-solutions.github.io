@@ -1,5 +1,5 @@
 ---
-title: RCA on a production enforcement model
+title: Enforcement RCA — a root-cause program for a live ML model
 summary: A repeatable root-cause-analysis program for a live ML enforcement system. Methodology only — no platform-internal data.
 date: "2026-06-17"
 lenses: [trust-safety, governance]

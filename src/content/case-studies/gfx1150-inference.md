@@ -1,5 +1,5 @@
 ---
-title: Inference tuning on a handheld iGPU (gfx1150)
+title: gfx1150-bench — inference tuning on a handheld iGPU
 summary: "A controlled performance study on an AMD handheld iGPU: roofline, an 8-model ROCm-vs-Vulkan matrix, and a 2.43× speculative-decoding result."
 date: "2026-06-17"
 lenses: [ai-infra, inference]
@@ -57,7 +57,7 @@ The sweep also settled three environment questions. Flash attention is a win in 
 
 ## Speculative decoding — breaking the wall
 
-The single lever that beats the bandwidth ceiling is speculative decoding, and the important framing is what it is and is not. This is a tuning-and-benchmark result measured against upstream llama.cpp binaries (`llama-completion` and `llama-speculative`) — a configuration sweep and a measurement, not a patch, a daemon, or any inference code written here.
+Speculative decoding is the single lever that beats the bandwidth ceiling. The framing is explicit: this is a tuning-and-benchmark result measured against upstream llama.cpp binaries (`llama-completion` and `llama-speculative`) — a configuration sweep and a measurement, not a patch, a daemon, or any inference code written here.
 
 `spec-bench.sh` runs a 14B/Q4_0 target with a 1.5B/Q4_0 draft, both fully offloaded (`-ngl 99 -ngld 99`), `-fa 1`, at `-c 1024`, sweeping draft-max ∈ {4, 8, 16} against the no-draft baseline. The draft has to come from the same family and tokenizer as the target; the Qwen2.5-Coder family ships a 1.5B sibling, which is why the spec probe uses Coder while the backend matrix sweeps the newer Qwen3-4B.
 

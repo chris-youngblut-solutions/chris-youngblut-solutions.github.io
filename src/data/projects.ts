@@ -34,14 +34,14 @@ export const projects: Project[] = [
     slug: "ai-infrastructure",
     date: "2025–26",
     name: "AI Infrastructure",
-    what: "The compute fleet and the local inference and training stack that runs on it.",
+    what: "the compute fleet and the local inference and training stack that runs on it",
     body: [
       "Four compute nodes, each chosen for a distinct job, linked over a private tailnet. A OneXPlayer X1 Pro handheld (AMD Strix, gfx1150) is the portable development and local-inference node. A dual-RTX-3090 desktop holds the vector and graph stores and serves models through vLLM. An NVIDIA GB10 (Grace Blackwell) desktop is the large-memory node, sized for the biggest models the fleet runs. A Dell PowerEdge VRTX chassis with three blades on Proxmox is being provisioned as the always-on host for services and this site; that provisioning is in progress, not finished.",
       "The nodes are spread across physical locations rather than concentrated in one rack. The tailnet stitches them into a single reachable surface, so a workload can land on whichever machine fits it: the handheld for iteration and on-device inference, the 3090s for serving and the stores that back retrieval, the GB10 when memory is the constraint, and the VRTX for anything that needs to stay up once that node is online.",
-      "The AMD handheld is a consumer APU, so its role is portable work and local inference under a power and thermal budget, not sustained heavy serving. The two RTX 3090s give enough combined VRAM to host vector and graph databases alongside a vLLM serving process. The GB10's value is its large unified memory, which is what makes it the node for models that don't fit elsewhere. The VRTX is the only piece built for continuous uptime, which is why it is the target for hosted services and the site rather than any of the desktops.",
+      "The AMD handheld is a consumer APU, so its role is portable work and local inference under a power and thermal budget, not sustained heavy serving. The two RTX 3090s give enough combined VRAM to host vector and graph databases alongside a vLLM serving process. The GB10's large unified memory makes it the node for models that don't fit elsewhere. The VRTX is the only piece built for continuous uptime, so it is the target for hosted services and the site rather than any of the desktops.",
       "On top of the fleet runs the local inference and training stack, split into two vendor tracks that share one goal: run capable models on hardware that is not a datacenter. The AMD track targets the gfx1150 handheld iGPU; the NVIDIA track targets the dual-3090 and Grace-Blackwell desktops.",
-      "On AMD the work is ROCm-first PyTorch plus a controlled llama.cpp performance study on the gfx1150 handheld. The study fixes the device's memory-bandwidth ceiling with a roofline analysis, measures how close two backends get to it across an eight-model matrix, and quantifies the one lever that beats the ceiling. The headline split is that Vulkan wins token generation in every cell while ROCm wins prompt processing in nearly every cell, so chat-shaped workloads favor Vulkan and long-context prefill favors ROCm. A speculative-decoding pass on a 14B target with a 1.5B draft measures 2.43× at the best draft-max setting. That figure is a tuning-and-benchmark result obtained by configuring and measuring upstream llama.cpp binaries — a measurement, not a daemon or a patch written here; a daemon-side integration is deferred, not built. The reproducible harness, the pinned methodology, and the raw results are public as gfx1150-bench; the numbers and tables live in the linked case study rather than being repeated here.",
-      "On NVIDIA the focus is multi-GPU serving rather than single-device tuning. The dual 3090s serve models through vLLM, with a hand-written FastAPI router in front that handles model placement and concurrency across the GPUs — deciding which GPU a request lands on and how concurrent load is spread. The Grace-Blackwell (GB10) node is the large-memory machine, the place for the largest models that do not fit comfortably on the 3090s. There is no public repo for the NVIDIA side; it runs on the fleet.",
+      "On AMD the work is ROCm-first PyTorch plus a controlled llama.cpp performance study on the gfx1150 handheld. The study fixes the device's memory-bandwidth ceiling with a roofline analysis, measures how close two backends get to it across an eight-model matrix, and quantifies the one lever that beats the ceiling. The headline split: Vulkan wins token generation in every cell, ROCm wins prompt processing in nearly every cell — chat-shaped workloads favor Vulkan, long-context prefill favors ROCm. A speculative-decoding pass on a 14B target with a 1.5B draft measures 2.43× at the best draft-max setting. That figure is a tuning-and-benchmark result obtained by configuring and measuring upstream llama.cpp binaries — a measurement, not a daemon or a patch written here; a daemon-side integration is deferred, not built. The reproducible harness, the pinned methodology, and the raw results are public as gfx1150-bench; the numbers and tables live in the linked case study rather than being repeated here.",
+      "On NVIDIA the focus is multi-GPU serving rather than single-device tuning. The dual 3090s serve models through vLLM, with a hand-written FastAPI router in front that handles model placement and concurrency — which GPU a request lands on, how concurrent load is spread. The Grace-Blackwell (GB10) node is the large-memory machine, the place for the largest models that do not fit comfortably on the 3090s. There is no public repo for the NVIDIA side; it runs on the fleet.",
     ],
     blocks: [
       {
@@ -59,7 +59,7 @@ export const projects: Project[] = [
         kind: "prose",
         items: [
           "The four nodes are spread across physical locations rather than concentrated in one rack, and a private tailnet stitches them into a single reachable surface. A workload lands on whichever machine fits it: the handheld for iteration and on-device inference, the 3090s for serving and the stores that back retrieval, the GB10 when memory is the constraint, and the VRTX for anything that needs to stay up once that node is online.",
-          "The handheld's role is portable work and local inference, not sustained heavy serving. The two 3090s give enough combined VRAM to host the vector and graph databases alongside a vLLM serving process. The GB10's large unified memory is what makes it the node for models that don't fit elsewhere. The VRTX is the only piece built for continuous uptime, which is why it is the target for hosted services and the site rather than any of the desktops.",
+          "The handheld's role is portable work and local inference, not sustained heavy serving. The two 3090s give enough combined VRAM to host the vector and graph databases alongside a vLLM serving process. The GB10's large unified memory makes it the node for models that don't fit elsewhere. The VRTX is the only piece built for continuous uptime, so it is the target for hosted services and the site rather than any of the desktops.",
         ],
       },
       {
@@ -82,7 +82,7 @@ export const projects: Project[] = [
         label: "the NVIDIA serving side",
         kind: "prose",
         items: [
-          "On NVIDIA the focus is multi-GPU serving rather than single-device tuning. The dual 3090s serve models through **vLLM**, with a **hand-written FastAPI router** in front that handles model placement and concurrency across the GPUs — deciding which GPU a request lands on and how concurrent load is spread.",
+          "On NVIDIA the focus is multi-GPU serving rather than single-device tuning. The dual 3090s serve models through **vLLM**, with a **hand-written FastAPI router** in front that handles model placement and concurrency — which GPU a request lands on, how concurrent load is spread.",
           "The Grace-Blackwell (GB10) node is the large-memory machine, the place for the largest models that do not fit comfortably on the 3090s. There is no public repo for the NVIDIA side; it runs on the fleet.",
         ],
       },
@@ -112,7 +112,7 @@ export const projects: Project[] = [
       {
         name: "AMD (gfx1150)",
         summary:
-          "ROCm-first PyTorch; llama.cpp tuned ROCm vs Vulkan (Vulkan wins decode, ROCm wins prefill); a ROCm-vs-Vulkan benchmark with 2.43× speculative-decoding measured.",
+          "ROCm-first PyTorch; a llama.cpp ROCm-vs-Vulkan benchmark (Vulkan wins decode, ROCm wins prefill) with 2.43× speculative decoding measured.",
       },
       {
         name: "NVIDIA (3090 / GB10)",
@@ -125,7 +125,7 @@ export const projects: Project[] = [
     slug: "agent-infrastructure",
     date: "2026",
     name: "Production agents & evaluation",
-    what: "Tooling to run, measure, and extend AI agents.",
+    what: "tooling to run, measure, and extend AI agents",
     body: [
       "Four pieces sit under this umbrella, each at a different stage. The agent-harness is a headless daemon to run, supervise, and observe local LLMs and agent loops across a small fleet of machines. The agentic-eval-harness is a multi-domain evaluation engine that scores agent quality against committed golden-case sets, and is public. spec-renderer is a single-file, no-build renderer that compiles LLM-authored specs into self-contained HTML — one engine for both forms and dashboards, including the eval harness's scorecards — and is public. okf-pack is an OKF-compatible knowledge-context format with a bidirectional adapter (Rust), built to drop in as a hot-swappable Spaces pack, and is public.",
       "The eval engine runs one agentic plan-act-observe loop over real tools, then scores how it does. The loop runs on the Anthropic SDK with offline, deterministic tools and explicit stop conditions: a submit_answer tool call is the only success path, alongside a turn cap and a tool-error budget. The engine is domain-agnostic; everything domain-specific lives in a domain pack selected with --domain, and adding a pack is additive — the loop, runner, and scoring code do not change.",
@@ -215,7 +215,7 @@ export const projects: Project[] = [
     slug: "data-bi",
     date: "2026",
     name: "Data & semantic layer",
-    what: "Governed metrics and typed knowledge graphs — single-sourced numbers.",
+    what: "governed metrics and typed knowledge graphs — single-sourced numbers",
     body: [
       "Two tracks sit under this umbrella. One is a single-sourced metrics path, built as two public repositories; the other is a knowledge-cartography track covered by its own case study and only summarized here.",
       "The metrics path starts from one rule: a metric is defined once, and nothing downstream composes its own SQL. A dbt + MetricFlow semantic layer over a DuckDB warehouse holds nine governed metrics including revenue, units sold, gross profit, order count, average order value, and on-time shipment rate. Each is declared in MetricFlow YAML, with the business rules (revenue counts completed orders only; a new customer is a first non-cancelled order) living in the YAML and the mart SQL rather than in any consumer. The warehouse is a full dbt medallion stack — synthetic seed data through staging, intermediate, and mart models — exercised by the project's dbt build and test suite. The data is a deterministic synthetic set of roughly four thousand orders in a single DuckDB file: the patterns transfer, but cloud-warehouse scale, orchestration, and Spark-scale pipelines are out of scope.",
@@ -279,7 +279,7 @@ export const projects: Project[] = [
     slug: "industrial-off-highway",
     date: "2024–26",
     name: "Ag / Industrial",
-    what: "Modern protocol tooling and retrofits for ag and off-highway equipment.",
+    what: "protocol tooling and retrofits for ag and off-highway equipment",
     body: [
       "Off-highway equipment runs on CAN and ISOBUS buses with far less open tooling than automotive has. Cars have inspectable protocol libraries and capture workflows; agricultural and off-highway machines mostly don't. The work here is a public protocol library plus field diagnostic and teaching work on real equipment.",
       "opendbc-ag is the public anchor: an MIT-licensed agricultural CAN/ISOBUS protocol library, modeled on comma.ai's automotive opendbc, and the first repo through the project-delivery pipeline. It is a corpus of CAN DBC files that map raw frames to named signals, scoped to pure-standard PGNs only — ISO 11783 (ISOBUS) public summaries and the SAE J1939 ag-relevant subset, with no reverse-engineered proprietary OEM definitions. The corpus spans three DBC files from distinct public sources, totaling 2,690 unique PGNs and 2,780 signals; the signal count is honest about its shape — most signals are PGN-level placeholders from the bulk source awaiting community enrichment, while the developed signal-level definitions live in the smaller hand-curated and library-derived files. Each DBC is generated by a dedicated extractor through a reproducible two-stage pipeline, and every signal carries a comment naming its public source so provenance traces back to the original page or code.",
@@ -333,7 +333,7 @@ export const projects: Project[] = [
     slug: "governance-trust-safety",
     date: "2024–26",
     name: "Trust, safety & governance",
-    what: "Methods and gates that keep AI and releases auditable.",
+    what: "methods and gates that keep AI and releases auditable",
     body: [
       "Methods and gates from production trust-and-safety and release work, built to keep a rule enforced. The pieces are a release-review panel, the branch-protection and signing configuration behind every public release, and a root-cause method for enforcement quality.",
       "The release-review side centers on ship-panel: a reusable, args-driven panel of six independent single-axis judges plus a synthesis step. Each judge reviews one axis alone — for example audience-fit, over-claim, or defensibility — and returns a verdict scoped to that axis; none sees another's call before issuing its own. A seventh synthesis pass reconciles the six verdicts into one report and sorts findings into what blocks a ship versus what only advises. It runs as the review stage of the ship-prep gate, takes the artifact as an argument, and so runs the same way over a repository, a bundle, or a single file. The two-governance-patterns case study covers the panel's decomposition and reuse in full.",
@@ -395,7 +395,7 @@ export const projects: Project[] = [
     slug: "dev-pipeline",
     date: "2026",
     name: "CI/CD",
-    what: "A governed scoping-to-ship pipeline run as repeatable skills.",
+    what: "a governed scoping-to-ship pipeline run as repeatable skills",
     body: [
       "A governed pipeline that takes a project from a blank scoping question to a signed public release, implemented as a chain of Claude Code skills. Each stage is a single command, and each promotes a project one step along a fixed lifecycle: T0 (scratch, no version control) to T1 (a private repo) to T2 (a public repo). Tier is lifecycle state rather than a directory layout, and the chain only moves forward — nothing skips a tier, and retirement is a separate move rather than a step backward.",
       "The five stages are /mapit, /pointit, /sendit, /vetit, and /shipit. The first two operate on a scratch container: /mapit catalogs the option surface for a problem area without picking a winner, and /pointit promotes one candidate into a scoping container with no git. The last three operate on the repo: /sendit stands up the private repo with its scaffolding, /vetit runs the read-only ship-prep gate, and /shipit flips the repo public and applies the hardening. Each stage adds only the artifacts the next tier requires, so the same gates run in the same order on every project.",
@@ -448,7 +448,7 @@ export const projects: Project[] = [
     slug: "interfaces",
     date: "2026",
     name: "UX",
-    what: "Human-facing surfaces — voice, a design language, and a desktop platform layer.",
+    what: "human-facing surfaces — voice, a design language, and a desktop platform layer",
     body: [
       "Three human-facing surfaces sit here: a voice input method, the design language this site is built in, and a desktop platform layer.",
       "voicekb is hold-to-talk dictation for Wayland on GNOME. Hold a hotkey, speak, release, and the transcript lands in whatever input is focused. The engine is CPU-only faster-whisper (medium.en, int8); while the hotkey is held, audio is captured to an in-memory ring buffer at 16 kHz mono, transcribed on release, and the buffer is zeroed. Nothing is written to disk, and no network socket is opened after the one-time model fetch. It runs entirely at user scope: no root, no sudo daemon, no polkit or Secure-Boot changes, and any systemd unit it installs is a user unit only.",
@@ -505,7 +505,7 @@ export const projects: Project[] = [
     slug: "secondchair",
     date: "2024–26",
     name: "Forward-deployed delivery",
-    what: "Embedded customer delivery — SecondChair, a privilege-aware legal-AI system shipped to a solo practice in seven days, in production.",
+    what: "embedded customer delivery — SecondChair, a privilege-aware legal-AI system shipped to a solo practice in seven days, in production",
     body: [
       "SecondChair is a retrieval system built for a solo-attorney practice and delivered in a seven-day engagement. It runs in production and has supported a matter that reached the Iowa Supreme Court. An integration syncs matters and documents from the practice's case-management system into the index.",
       "On top of the index sits a privilege-aware retrieval layer: BGE-M3 hybrid retrieval (dense + sparse + late-interaction) over a Qdrant vector store and a Neo4j graph queried with Cypher, with privilege filters that enforce what may surface for a given query. A set of MCP tools puts case-work actions in front of Claude, so the attorney works through a single surface rather than across separate systems.",

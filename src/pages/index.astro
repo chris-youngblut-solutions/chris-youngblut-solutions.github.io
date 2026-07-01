@@ -1,57 +1,63 @@
 ---
-import { projects } from "../data/projects";
+import Blocks from "../components/Blocks.astro";
 import CabinShell from "../layouts/CabinShell.astro";
+import type { Block } from "../data/projects";
 
-// Reviewer-facing order: lead with what an FDE / AI-eng reviewer screens for
-// first (production agents, forward-deployed delivery, trust & safety), then the
-// supporting capabilities. Unknown slugs fall to the end in their data order.
-const ORDER = [
-  "agent-infrastructure", // Production agents & evaluation
-  "secondchair", // Forward-deployed delivery
-  "governance-trust-safety", // Trust, safety & governance
-  "data-bi", // Data & semantic layer
-  "ai-infrastructure", // AI Infrastructure
-  "industrial-off-highway", // Ag / Industrial
-  "dev-pipeline", // CI/CD
-  "interfaces", // UX
+// About is the landing (2026-07-01). Per-domain through-line summaries of
+// skills/builds. Capability-only on the legal line (no client/matter);
+// method-only on trust & safety (no platform name, no figures).
+const throughlines: Block[] = [
+  {
+    label: "through-lines",
+    kind: "layers",
+    items: [
+      "industrial automation — pneumatic and hydraulic systems with condition-based preventive maintenance; baseline-and-deviation diagnostics. The same signal-path decomposition carries into the protocol and field-diagnostic work (opendbc-ag, raven-viper).",
+      "trust & safety at scale — queues, risk, and big-data systems; a root-cause-analysis program that keeps a live ML enforcement model measurably correct (method-only).",
+      "AI infrastructure — multi-GPU serving (vLLM behind a hand-written router), local inference and GPU performance engineering (gfx1150-bench), across a tailnet-linked fleet I provision and run.",
+      "legal AI — privilege-aware BGE-M3 hybrid retrieval for a solo-attorney practice over a Qdrant vector store and a Neo4j graph (Cypher), with document access enforced as a code-level gate.",
+      "dev platform — a scoping-to-signed-release pipeline run as skills (mapit → shipit), an adversarial release-review panel, and agent + evaluation infrastructure.",
+      "data & BI — a governed dbt + MetricFlow semantic layer whose human and agent (MCP) consumers read the same numbers; typed knowledge graphs over real corpora.",
+      "interfaces — local hold-to-talk dictation (voicekb), the Cabin design system this site runs on, and Spaces, a configurable desktop platform.",
+    ],
+  },
 ];
-const sorted = [...projects].sort(
-  (a, b) => (ORDER.indexOf(a.slug) + 1 || 99) - (ORDER.indexOf(b.slug) + 1 || 99),
-);
 ---
 
 <CabinShell
-  title="C. Youngblut — Forward-Deployed Engineer"
-  crumb="home"
-  activeTrunk="projects"
+  title="Chris Youngblut — forward-deployed engineer"
+  description="Forward-deployed engineer building and operating AI infrastructure and tooling on owned hardware."
+  crumb="about"
+  activeTrunk="about"
 >
   <p class="cabin-eyebrow">forward-deployed engineer</p>
-  <h1 class="display index-lede">
-    Tools, infrastructure, and the gates that ship them.
-  </h1>
-  <p class="index-sub">
-    Forward-deployed tooling, built and run on owned AI infrastructure.
-  </p>
+  <h1 class="display">Christopher Youngblut</h1>
 
-  <div class="umbrella-grid">
-    {
-      sorted.map((p) => (
-        <a class="umbrella-card" href={`/projects/${p.slug}`}>
-          <div class="uc-head">
-            {p.tag && (
-              <span class="chip" data-kind="accent">
-                {p.tag}
-              </span>
-            )}
-          </div>
-          <h2 class="uc-name">{p.name}</h2>
-          <p class="uc-what">{p.what}</p>
-          <div class="uc-foot">
-            {p.subs && <span class="chip">{p.subs.length} pieces</span>}
-          </div>
-        </a>
-      ))
-    }
+  <div class="cs-body">
+    <p>
+      I build and operate AI infrastructure and the tooling around it, independently as
+      <strong>^Loop Solutions</strong>. Remote (US).
+    </p>
+    <p>
+      I read a system by how it works, not by what it's called, and I build the tool it's
+      missing. The work runs on hardware I own — a small fleet I provision and operate —
+      and ships through a gated pipeline: mapped, built, adversarially reviewed, then public.
+    </p>
+    <p>
+      The <a href="/projects">projects</a> are grouped by capability; the
+      <a href="/writing">writing</a> is a set of neutral case studies of systems that shipped.
+    </p>
   </div>
 
+  <Blocks blocks={throughlines} class="pblocks cs-blocks" />
+
+  <div class="cs-body cs-body-detail">
+    <h2>Contact</h2>
+    <ul>
+      <li><a href="mailto:christopheryoungblut@gmail.com">christopheryoungblut@gmail.com</a></li>
+      <li>
+        <a href="https://linkedin.com/in/chris-youngblut-solutions">linkedin.com/in/chris-youngblut-solutions</a>
+      </li>
+      <li><a href="https://github.com/chris-youngblut-solutions">github.com/chris-youngblut-solutions</a></li>
+    </ul>
+  </div>
 </CabinShell>

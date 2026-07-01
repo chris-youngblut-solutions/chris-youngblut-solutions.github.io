@@ -1,12 +1,12 @@
 ---
-title: Spaces
-summary: A desktop platform that organizes a machine into Spaces — each with its own apps, layout, and local-model context — that freeze and thaw on a keystroke. GNOME + Hyprland from a shared core.
+title: Spaces — a desktop platform that freezes and thaws whole workspaces
+summary: Organizes a machine into Spaces — each with its own apps, layout, and local-model context — that freeze and thaw on a keystroke. GNOME + Hyprland from a shared core.
 date: "2026-06-17"
 lenses: [platforms, fde]
 order: 1
 ---
 
-Spaces is a desktop application that organizes a machine into compartments ("Spaces"), each with its own apps, window layout, and local-model context. A keystroke summons a takeover surface; selecting a Space switches to it with its apps launched and snapped into a panel grid. Background Spaces freeze — their processes suspended, GPU and RAM reclaimed — and thaw on return with state intact. It runs on GNOME and Hyprland from a shared core, currently on an X1 Pro handheld and a fleet dev box.
+Spaces is a desktop platform that organizes a machine into compartments ("Spaces"), each with its own apps, window layout, and local-model context. A keystroke summons a takeover surface; selecting a Space switches to it with its apps launched and snapped into a panel grid. Background Spaces freeze — their processes suspended, GPU and RAM reclaimed — and thaw on return with state intact. It runs on GNOME and Hyprland from a shared core, currently on an X1 Pro handheld and a fleet dev box.
 
 ## The unit of organization
 
@@ -41,7 +41,7 @@ On GNOME the summon rides the existing Activities press rather than claiming a n
 
 The platform-independent work — the Space data model and the zone and layout math that decides where a window goes — is one Rust crate with no UI dependency. It computes placement; it does not know how a window is moved. Two platforms sit on top of that one core: a GNOME shell extension and a Hyprland layer-shell renderer. The same core math drives both.
 
-The gap between "where a window should go" and "make the window go there" is the `WindowManagerAdapter` trait. Each platform supplies an implementation. Hyprland accepts placement commands directly, so its adapter drives the compositor without an intermediary. GNOME exposes no external window-control API, so its adapter routes through a companion that translates the core's placement contract into Mutter's `move_resize_frame` calls — the move/resize primitive GNOME's window manager does expose. The trait is the seam that lets a single layout engine target two very different window managers without the core knowing which one it is talking to.
+The gap between "where a window should go" and "make the window go there" is the `WindowManagerAdapter` trait. Each platform supplies an implementation. Hyprland accepts placement commands directly, so its adapter drives the compositor without an intermediary. GNOME exposes no external window-control API, so its adapter routes through a companion that translates the core's placement contract into Mutter's `move_resize_frame` calls — the move/resize primitive GNOME's window manager does expose. The trait is the seam that lets a single layout engine target two different window managers without the core knowing which one it is talking to.
 
 ## Freeze and thaw
 

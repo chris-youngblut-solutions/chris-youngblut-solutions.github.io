@@ -1,6 +1,6 @@
 ---
-title: "Industrial edge: a sprayer GPS-dropout diagnostic and a field curriculum"
-summary: A CAN/GPS diagnostic on agricultural spray equipment and a field curriculum, with the public protocol library that backs the domain.
+title: "Industrial edge — a sprayer diagnostic, a field curriculum, a protocol library"
+summary: A CAN/GPS diagnostic on agricultural spray equipment, a field curriculum, and the public protocol library that backs the domain.
 date: "2026-06-17"
 lenses: [industrial, edge]
 order: 7
@@ -13,7 +13,7 @@ Two related field artifacts in agricultural/industrial edge work — a diagnosti
 
 ## raven-viper — a GPS-dropout diagnostic
 
-A diagnostic for intermittent GPS dropout on a self-propelled agricultural sprayer's GPS-guided steering system. The problem is the kind that resists a clean fix: the dropout is intermittent, and the symptom (the steering loses its position fix) sits at the end of a signal path with several possible upstream causes.
+A diagnostic for intermittent GPS dropout on a self-propelled agricultural sprayer's GPS-guided steering system. The dropout is intermittent, and the symptom — the steering loses its position fix — sits at the end of a signal path with several possible upstream causes.
 
 The diagnostic isolates the dropout along that path — receiver, bus, steering controller — to separate a hardware fault from a firmware or configuration cause. Each segment is checked in turn so a single intermittent symptom resolves to a located cause rather than a guess, and the same fault, when it recurs, points to the same segment.
 
@@ -21,7 +21,7 @@ Field equipment and the equipment-specific particulars are kept general here. Wh
 
 ## sprayer-apprenticeship — a field curriculum
 
-A documentation-only curriculum that walks a small group through the sprayer firmware-flash procedure end to end. It is the second half of the same job: once a fix exists, it is written down so others can perform it without the person who first worked it out.
+A documentation-only curriculum that walks a small group through the sprayer firmware-flash procedure end to end. It is the second half of the same job: once a fix exists, it gets written down so others can perform it without the person who first worked it out.
 
 The curriculum covers each step of the flash procedure, what the step does, what can go wrong at that step, and how to verify the step succeeded before moving on. The structure turns a one-time fix into a teachable, repeatable procedure — failure modes named in advance, and a verification check at each stage so a mistake surfaces where it happened rather than at the end.
 

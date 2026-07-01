@@ -15,11 +15,14 @@
    ============================================================ */
 :root,
 [data-cabin="day"] {
-  /* paper — body of every cabin surface */
-  --cabin-paper:        #EDE3CF;
-  --cabin-paper-2:      #E4D8BE;   /* hover, selected row */
-  --cabin-paper-3:      #D9C9A8;   /* deeper inset */
-  --cabin-paper-inset:  #F4ECDA;   /* lifted cards on paper */
+  /* paper — body of every cabin surface.
+     Day surfaces: warm greige STONE (updated 2026-07-01 from the prior
+     butter-cream #EDE3CF/#E4D8BE/#D9C9A8/#F4ECDA). Stonier, less yellow,
+     still warm (R>G>B). Matches spec-renderer themes/cabin (33d99e9). */
+  --cabin-paper:        #E7E1D5;
+  --cabin-paper-2:      #DDD6C7;   /* hover, selected row */
+  --cabin-paper-3:      #D2CAB8;   /* deeper inset */
+  --cabin-paper-inset:  #F1EDE4;   /* lifted cards on paper */
 
   /* ink — type & rules */
   --cabin-ink:          #2A1F18;

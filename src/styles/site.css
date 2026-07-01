@@ -104,21 +104,36 @@ body {
 }
 
 /* ----------------------------------------------------------------
-   THEME STAMP — editorial day/night toggle (uppercase, .cabin-btn-stamp).
-   Defaults to OS preference (auto); a click overrides + persists.
+   THEME BULB — minimalist lightbulb day/night toggle. Day = lit
+   (filled, accent) bulb; night = outline (off). Defaults to OS
+   preference (auto); a click overrides + persists.
    ---------------------------------------------------------------- */
-.theme-stamp {
-  min-width: 62px;
-  justify-content: flex-start;
-}
-.theme-stamp .theme-stamp-ico {
+.theme-bulb {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 4px;
+  margin: -4px;
   display: inline-flex;
   align-items: center;
-  color: var(--cabin-accent);
+  cursor: pointer;
+  color: var(--cabin-ink-3);
+  transition: color 150ms var(--ease);
 }
-.theme-stamp .theme-stamp-ico svg {
-  width: 13px;
-  height: 13px;
+.theme-bulb:hover {
+  color: var(--cabin-ink);
+}
+.theme-bulb[aria-checked="false"] {
+  color: var(--cabin-accent); /* day: lit */
+}
+.theme-bulb:focus-visible {
+  outline: 2px solid var(--cabin-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.theme-bulb svg {
+  width: 16px;
+  height: 16px;
   display: block;
 }
 
