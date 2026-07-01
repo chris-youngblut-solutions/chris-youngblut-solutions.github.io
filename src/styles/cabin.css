@@ -42,7 +42,7 @@
 
   /* moss — the rail-dot family (day) */
   --cabin-moss:         #5F6B3D;
-  --cabin-moss-hi:      #8A9A58;
+  --cabin-moss-hi:      #9CAA6B;
   --cabin-moss-lo:      #46512C;
 
   /* the bezel — frame around focal artifacts */
@@ -92,7 +92,7 @@
 
   /* moss — night: lifted for contrast on dark paper */
   --cabin-moss:         #6B7845;
-  --cabin-moss-hi:      #93A363;
+  --cabin-moss-hi:      #A5B276;
   --cabin-moss-lo:      #3E4827;
 
   --cabin-bezel:        #1A211E;
@@ -357,7 +357,8 @@
 .cabin-side-item .cabin-side-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: radial-gradient(circle at 32% 30%,
-    var(--cabin-moss-hi), var(--cabin-moss) 55%, var(--cabin-moss-lo));
+    rgba(255,255,255,0.55) 0%, var(--cabin-moss-hi) 28%,
+    var(--cabin-moss) 62%, var(--cabin-moss-lo));
   flex-shrink: 0;
 }
 .cabin-side-item.is-on .cabin-side-dot {
