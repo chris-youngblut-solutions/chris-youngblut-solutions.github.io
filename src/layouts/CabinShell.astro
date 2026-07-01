@@ -61,22 +61,39 @@ const trunks = [
     </main>
   </div>
 
-  {/* Rail collapse — brand click toggles; state persisted (cabin.rail) and
-      restored pre-paint by the Base no-FOUC script. Bundled + CSP-hashed. */}
+  {/* Rail collapse — hover-driven on pointer devices (brand opens; leaving
+      brand+rail closes after a grace delay). Brand click stays as the
+      keyboard/touch fallback. Bundled + CSP-hashed. */}
   <script>
-    const KEY = "cabin.rail";
     const btn = document.getElementById("rail-toggle");
+    const rail = document.getElementById("site-rail");
     const root = document.documentElement;
+    const hoverable = window.matchMedia("(hover: hover)").matches;
+    let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+    function set(state: "open" | "collapsed") {
+      root.dataset.rail = state;
+      btn?.setAttribute("aria-expanded", String(state === "open"));
+    }
+    function open() {
+      clearTimeout(closeTimer);
+      set("open");
+    }
+    function scheduleClose() {
+      clearTimeout(closeTimer);
+      closeTimer = setTimeout(() => set("collapsed"), 260);
+    }
+
     btn?.setAttribute("aria-expanded", String(root.dataset.rail !== "collapsed"));
-    btn?.addEventListener("click", () => {
-      const next = root.dataset.rail === "collapsed" ? "open" : "collapsed";
-      root.dataset.rail = next;
-      btn.setAttribute("aria-expanded", String(next !== "collapsed"));
-      try {
-        localStorage.setItem(KEY, next);
-      } catch {
-        /* private mode — non-fatal */
+    if (hoverable) {
+      for (const el of [btn, rail]) {
+        el?.addEventListener("mouseenter", open);
+        el?.addEventListener("mouseleave", scheduleClose);
       }
+    }
+    btn?.addEventListener("click", () => {
+      clearTimeout(closeTimer);
+      set(root.dataset.rail === "collapsed" ? "open" : "collapsed");
     });
   </script>
 </Base>

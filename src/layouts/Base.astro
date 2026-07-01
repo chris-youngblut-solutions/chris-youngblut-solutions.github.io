@@ -55,8 +55,7 @@ const canonical = new URL(Astro.url.pathname, siteUrl).href;
         var t = (s && s.getItem("cabin.theme")) ||
           (window.matchMedia("(prefers-color-scheme: dark)").matches ? "night" : "day");
         d.dataset.cabin = t;
-        var r = s && s.getItem("cabin.rail");
-        if (r === "collapsed") d.dataset.rail = r;
+        if (window.matchMedia("(hover: hover)").matches) d.dataset.rail = "collapsed";
       })();
     </script>
   </head>

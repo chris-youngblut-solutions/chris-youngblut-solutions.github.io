@@ -69,13 +69,29 @@ body {
   grid-template-rows: 56px minmax(0, 1fr);
   min-height: 100dvh;
 }
-/* Rail collapse — toggled by clicking the brand name (data-rail on <html>,
-   persisted as cabin.rail, restored pre-paint by the no-FOUC script). */
-[data-rail="collapsed"] .site-shell {
-  grid-template-columns: 0 minmax(0, 1fr);
-}
-[data-rail="collapsed"] .site-rail {
-  display: none;
+/* Rail collapse — hover-driven on pointer devices: hovering the brand name
+   opens the rail, leaving brand+rail closes it (grace timer in CabinShell).
+   Brand click still toggles as the keyboard/touch fallback. data-rail lives
+   on <html>; the no-FOUC script sets the pre-paint default (collapsed when
+   hover-capable). Desktop-only — the 640px bottom-bar layout is untouched. */
+@media (min-width: 641px) {
+  .site-shell {
+    transition: grid-template-columns 220ms var(--ease);
+  }
+  .site-rail {
+    min-width: 0;
+    overflow-x: hidden;
+    white-space: nowrap;
+    transition: padding 220ms var(--ease), border-color 220ms var(--ease);
+  }
+  [data-rail="collapsed"] .site-shell {
+    grid-template-columns: 0 minmax(0, 1fr);
+  }
+  [data-rail="collapsed"] .site-rail {
+    padding-left: 0;
+    padding-right: 0;
+    border-right-color: transparent;
+  }
 }
 .site-strip {
   grid-area: strip;
