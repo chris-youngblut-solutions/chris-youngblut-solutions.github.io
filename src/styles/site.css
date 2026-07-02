@@ -662,6 +662,22 @@ body {
   font-size: var(--t-h3);
   margin: 1.7em 0 0.5em;
 }
+/* Markdown h2-sections render as "bubbles" (wrapped by rehypeBubbleSections;
+   hand-authored pages wrap their sections in .md-bubble directly). Scoped to
+   .cs-body so /cv's .cv-body résumé stays bare. */
+.cs-body .md-bubble {
+  padding: 16px 20px;
+  border: 1px solid var(--cabin-rule);
+  border-radius: 10px;
+  background: var(--cabin-paper-inset);
+  margin: 0 0 18px;
+}
+.cs-body .md-bubble > h2:first-child {
+  margin-top: 0;
+}
+.cs-body .md-bubble > :last-child {
+  margin-bottom: 0;
+}
 .cs-body p {
   font-size: 15px;
   line-height: 1.65;

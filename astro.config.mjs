@@ -4,6 +4,34 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 
+// Wrap each markdown h2-section (the h2 + everything until the next h2) in
+// <section class="md-bubble"> so body sections can render as lifted "bubble"
+// cards. Content before the first h2 (the article lead) stays unwrapped.
+// Styling is scoped to .cs-body, so /cv (.cv-body) is unaffected visually.
+function rehypeBubbleSections() {
+  return (tree) => {
+    const out = [];
+    let bucket = null;
+    for (const node of tree.children) {
+      if (node.type === "element" && node.tagName === "h2") {
+        if (bucket) out.push(bucket);
+        bucket = {
+          type: "element",
+          tagName: "section",
+          properties: { className: ["md-bubble"] },
+          children: [node],
+        };
+      } else if (bucket) {
+        bucket.children.push(node);
+      } else {
+        out.push(node);
+      }
+    }
+    if (bucket) out.push(bucket);
+    tree.children = out;
+  };
+}
+
 // Interim host = GitHub Pages user-site (chris-youngblut-solutions.github.io),
 // served at the root, so `base` stays "/" (the default). When the same build
 // later moves to the self-hosted VRTX/Cloudflare host, only `site` changes.
@@ -16,7 +44,7 @@ export default defineConfig({
   prefetch: { defaultStrategy: "viewport" },
   // Prism (class-based) instead of Shiki (inline styles) so case-study code
   // blocks stay CSP-compatible (no unsafe-inline for styles).
-  markdown: { syntaxHighlight: "prism" },
+  markdown: { syntaxHighlight: "prism", rehypePlugins: [rehypeBubbleSections] },
   // Strict CSP (Astro 6 stable). Astro hashes its own bundled scripts/styles +
   // inline scripts and emits a <meta> CSP with matching sha256 hashes — no
   // `unsafe-inline`. Incompatible with <ClientRouter /> view transitions
