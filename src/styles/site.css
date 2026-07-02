@@ -485,6 +485,17 @@ body {
 .pblock {
   margin: 0 0 24px;
 }
+/* Every labeled block's content sits in a "bubble" — the lifted paper-inset
+   card, matching .layers-stack (which is its own bubble). Label stays above. */
+.pblock-bubble {
+  padding: 15px 18px;
+  border: 1px solid var(--cabin-rule);
+  border-radius: 10px;
+  background: var(--cabin-paper-inset);
+}
+.pblock-bubble ul {
+  padding-left: 1.2em;
+}
 .pblock-label {
   font-family: var(--font-mono);
   font-size: 10px;

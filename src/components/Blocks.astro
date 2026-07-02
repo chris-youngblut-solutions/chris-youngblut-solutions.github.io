@@ -43,13 +43,19 @@ function inline(s: string): string {
             })}
           </div>
         ) : b.kind === "list" ? (
-          <ul>
-            {b.items.map((it) => (
-              <li set:html={inline(it)} />
-            ))}
-          </ul>
+          <div class="pblock-bubble">
+            <ul>
+              {b.items.map((it) => (
+                <li set:html={inline(it)} />
+              ))}
+            </ul>
+          </div>
         ) : (
-          b.items.map((it) => <p set:html={inline(it)} />)
+          <div class="pblock-bubble">
+            {b.items.map((it) => (
+              <p set:html={inline(it)} />
+            ))}
+          </div>
         )}
       </section>
     ))
