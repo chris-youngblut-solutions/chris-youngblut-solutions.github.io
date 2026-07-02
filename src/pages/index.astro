@@ -3,9 +3,24 @@ import Blocks from "../components/Blocks.astro";
 import CabinShell from "../layouts/CabinShell.astro";
 import type { Block } from "../data/projects";
 
-// About is the landing (2026-07-01). Per-domain through-line summaries of
-// skills/builds. Capability-only on the legal line (no client/matter);
-// method-only on trust & safety (no platform name, no figures).
+// The landing is a brochure of who I am and what I'm developing — the work is
+// the frame, not a role label (role-facing material lives on /cv). Capability-
+// only on the legal line (no client/matter); method-only on trust & safety.
+const developing: Block[] = [
+  {
+    label: "developing now",
+    kind: "layers",
+    items: [
+      "Spaces — a desktop platform that freezes and thaws whole workspaces; GNOME and Hyprland from a shared core, dogfooding on my own machines.",
+      "SecondChair — self-hosted legal RAG, in production with a solo-attorney practice; fully local reasoning is staged next.",
+      "opendbc-ag — an open agricultural CAN/ISOBUS protocol library, with sprayer retrofit work in the field behind it.",
+      "the fleet — multi-GPU serving and local-inference tuning (gfx1150-bench) across machines I provision and run.",
+      "agent & evaluation tooling — an eval harness, a single-file spec renderer, and knowledge-context packs, public.",
+      "Cabin — the design system this site runs on: warm paper, one accent, day and night.",
+    ],
+  },
+];
+
 const throughlines: Block[] = [
   {
     label: "through-lines",
@@ -24,29 +39,30 @@ const throughlines: Block[] = [
 ---
 
 <CabinShell
-  title="Chris Youngblut — forward-deployed engineer"
-  description="Forward-deployed engineer building and operating AI infrastructure and tooling on owned hardware."
+  title="Christopher Youngblut — building and running my own stack"
+  description="Who I am and what I'm developing — AI infrastructure, tooling, and the systems around them, built and run on hardware I own."
   crumb="about"
   activeTrunk="about"
 >
-  <p class="cabin-eyebrow">forward-deployed engineer</p>
+  <p class="cabin-eyebrow">who i am · what i'm building</p>
   <h1 class="display">Christopher Youngblut</h1>
 
   <div class="cs-body">
     <p>
-      AI infrastructure and the tooling around it. Built independently, as
-      <strong>^Loop Solutions</strong>. Run on hardware I own. Remote (US).
+      I read a system by how it works, not by what it's called — and build the tool it's
+      missing. The work runs on hardware I own, independently as <strong>^Loop Solutions</strong>.
     </p>
     <p>
-      I read a system by how it works, not by what it's called — and build the tool it's
-      missing. Everything ships through gates: mapped, built, adversarially reviewed, then
-      public. The keystroke that goes public is mine.
+      Everything ships through gates: mapped, built, adversarially reviewed, then public.
+      The keystroke that goes public is mine.
     </p>
     <p>
       The <a href="/projects">projects</a> are the capabilities. The
       <a href="/writing">writing</a> is the proof — neutral studies of systems that shipped.
     </p>
   </div>
+
+  <Blocks blocks={developing} class="pblocks cs-blocks" />
 
   <Blocks blocks={throughlines} class="pblocks cs-blocks" />
 

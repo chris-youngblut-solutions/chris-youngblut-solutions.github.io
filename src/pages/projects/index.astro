@@ -2,12 +2,11 @@
 import { projects } from "../../data/projects";
 import CabinShell from "../../layouts/CabinShell.astro";
 
-// Reviewer-facing order: lead with what an FDE / AI-eng reviewer screens for
-// first (production agents, forward-deployed delivery, trust & safety), then the
-// supporting capabilities. Unknown slugs fall to the end in their data order.
+// Curated order: the work in production or active development leads, the
+// supporting capabilities follow. Unknown slugs fall to the end in data order.
 const ORDER = [
-  "agent-infrastructure", // Production agents & evaluation
-  "secondchair", // Forward-deployed delivery
+  "agent-infrastructure", // Agents & evaluation
+  "secondchair", // Embedded delivery
   "governance-trust-safety", // Trust, safety & governance
   "data-bi", // Data & semantic layer
   "ai-infrastructure", // AI Infrastructure
@@ -30,7 +29,7 @@ const sorted = [...projects].sort(
     Tools, infrastructure, and the gates that ship them.
   </h1>
   <p class="index-sub">
-    Forward-deployed tooling, built and run on owned AI infrastructure.
+    Built and run on infrastructure I own.
   </p>
 
   <div class="umbrella-grid">

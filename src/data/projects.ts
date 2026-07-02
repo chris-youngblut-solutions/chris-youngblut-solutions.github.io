@@ -124,7 +124,7 @@ export const projects: Project[] = [
   {
     slug: "agent-infrastructure",
     date: "2026",
-    name: "Production agents & evaluation",
+    name: "Agents & evaluation",
     what: "tooling to run, measure, and extend AI agents",
     body: [
       "Four pieces sit under this umbrella, each at a different stage. The agent-harness is a headless daemon to run, supervise, and observe local LLMs and agent loops across a small fleet of machines. The agentic-eval-harness is a multi-domain evaluation engine that scores agent quality against committed golden-case sets, and is public. spec-renderer is a single-file, no-build renderer that compiles LLM-authored specs into self-contained HTML — one engine for both forms and dashboards, including the eval harness's scorecards — and is public. okf-pack is an OKF-compatible knowledge-context format with a bidirectional adapter (Rust), built to drop in as a hot-swappable Spaces pack, and is public.",
@@ -504,7 +504,7 @@ export const projects: Project[] = [
   {
     slug: "secondchair",
     date: "2024–26",
-    name: "Forward-deployed delivery",
+    name: "Embedded delivery",
     what: "embedded customer delivery — SecondChair, a privilege-aware legal-AI system shipped to a solo practice in seven days, in production",
     body: [
       "SecondChair is a retrieval system built for a solo-attorney practice and delivered in a seven-day engagement. It runs in production and has supported a matter that reached the Iowa Supreme Court. An integration syncs matters and documents from the practice's case-management system into the index.",
